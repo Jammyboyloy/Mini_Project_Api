@@ -3,21 +3,26 @@ body {
   font-family: Poppins;
 }
 :root {
-  --bg-pimary: #eff6ff;
+  --bg-pimary: oklch(0.97 0.014 254.604);
   --bg-main: #ffffff;
   --bg-secondary: #f9fafb;
   --text-color: #364153;
-  --hover-color: #f9fafb;
-  --text-primary: #155dfc;
+  --hover-color: whitesmoke;
+  --text-primary: oklch(0.546 0.245 262.881);
+  --text-secondary: oklch(0.446 0.03 256.802);
+  --nav-text: oklch(0.373 0.034 259.733);
   --border-color: #e5e7eb;
 }
 
 .dark-mode {
-  --bg-pimary: #1c2d52;
+  --bg-pimary: oklab(0.379 -0.0113991 -0.145554 / 0.3);
   --bg-main: #1e2939;
   --bg-secondary: #101828;
-  --text-color: #b4b9c3;
+  --text-color: #fff;
   --hover-color: #364153;
+  --text-primary: oklch(0.707 0.165 254.624);
+  --text-secondary: oklch(0.707 0.022 261.325);
+  --nav-text: oklch(0.872 0.01 258.338);
   --border-color: #364153;
 }
 
@@ -39,6 +44,14 @@ body {
 
 .text-primary {
   color: var(--text-primary) !important;
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.nav-text {
+  color: var(--nav-text);
 }
 
 .border-bottom {

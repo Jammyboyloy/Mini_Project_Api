@@ -13,7 +13,7 @@ fetch(baseUrl + "/auth/profile", {
   .then((item) => {
     document.querySelector(".user").innerHTML = `
           <h6 class="p-0 m-0 text-end">${item.data.firstName} ${item.data.lastName}</h6>
-          <small>${item.data.email}</small>`;
+          <small class="nav-text">${item.data.email}</small>`;
 
     document.querySelector(".userProfile").innerHTML = `
           <img src="${item.data.avatar}"alt="no" class="img-fluid rounded-circle object-fit-cover" style="width: 40px;">`;
