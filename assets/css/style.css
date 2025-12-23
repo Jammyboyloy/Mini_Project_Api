@@ -1,14 +1,90 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-body{
-          font-family: Poppins;
+body {
+  font-family: Poppins;
 }
-.toast {
-  display: block !important;      
-  opacity: 0;
-  transform: translateX(100vw);  
-  transition: opacity 0.5s, transform 0.5s;
+:root {
+  --bg-pimary: #fff;
+  --text-color: #212529;
 }
-.toast.show {
-  opacity: 1;
-  transform: translateX(0);
-} 
+
+.dark-mode {
+  --bg-pimary: #212529;
+  --text-color: #fff;
+}
+
+.bg-main {
+  background-color: var(--bg-pimary);
+}
+
+.text-main {
+  color: var(--text-color);
+}
+
+.bg-primary {
+  background-color: blueviolet !important;
+}
+
+.text-primary {
+  color: blueviolet !important;
+}
+
+.sidebar {
+  top: 57px;
+  width: 250px;
+  height: calc(100vh - 57px);
+  overflow-y: auto;
+}
+
+nav-item {
+  transition: 0.1s ease-in-out;
+  border-radius: 10px;
+}
+
+.nav-link.text-main:focus {
+  color: var(--text-color) !important;
+}
+
+.dropdown-menu {
+  transform: translateY(6px);
+}
+
+.nav-link:not(.active):hover,
+.dropdown-item:hover {
+  color: blueviolet !important;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
+
+.content {
+  height: calc(100vh - 57px);
+  margin-top: 57px;
+}
+
+.active {
+  color: white !important;
+  background-color: blueviolet;
+  border-radius: 10px;
+}
+
+.tran-y {
+  transform: translateY(-50%);
+}
+
+.icon-input {
+  position: absolute;
+  top: 50%;
+  left: 18px;
+  font-size: 18px;
+}
+
+.f-c::placeholder {
+  color: var(--text-prime) !important;
+}
+
+@media (min-width: 992px) {
+  .content {
+    height: calc(100vh - 57px);
+    margin-left: 250px;
+    margin-top: 57px;
+  }
+}
