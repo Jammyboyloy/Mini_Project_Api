@@ -3,35 +3,56 @@ body {
   font-family: Poppins;
 }
 :root {
-  --bg-pimary: #fff;
-  --text-color: #212529;
+  --bg-pimary: #eff6ff;
+  --bg-main: #ffffff;
+  --bg-secondary: #f9fafb;
+  --text-color: #364153;
+  --hover-color: #f9fafb;
+  --text-primary: #155dfc;
+  --border-color: #e5e7eb;
 }
 
 .dark-mode {
-  --bg-pimary: #212529;
-  --text-color: #fff;
+  --bg-pimary: #1c2d52;
+  --bg-main: #1e2939;
+  --bg-secondary: #101828;
+  --text-color: #b4b9c3;
+  --hover-color: #364153;
+  --border-color: #364153;
 }
 
 .bg-main {
-  background-color: var(--bg-pimary);
+  background-color: var(--bg-main) !important;
 }
 
 .text-main {
-  color: var(--text-color);
+  color: var(--text-color) !important;
 }
 
 .bg-primary {
-  background-color: blueviolet !important;
+  background-color: var(--bg-pimary) !important;
+}
+
+.bg-secondary {
+  background-color: var(--bg-secondary) !important;
 }
 
 .text-primary {
-  color: blueviolet !important;
+  color: var(--text-primary) !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.border-end {
+  border-right: 1px solid var(--border-color) !important;
 }
 
 .sidebar {
-  top: 57px;
+  top: 60px;
   width: 250px;
-  height: calc(100vh - 57px);
+  height: calc(100vh - 60px);
   overflow-y: auto;
 }
 
@@ -50,19 +71,18 @@ nav-item {
 
 .nav-link:not(.active):hover,
 .dropdown-item:hover {
-  color: blueviolet !important;
-  background-color: #f8f9fa;
+  background-color: var(--hover-color);
   border-radius: 10px;
 }
 
 .content {
-  height: calc(100vh - 57px);
-  margin-top: 57px;
+  height: calc(100vh - 60px);
+  margin-top: 60px;
 }
 
 .active {
-  color: white !important;
-  background-color: blueviolet;
+  color: var(--text-primary) !important;
+  background-color: var(--bg-pimary) !important;
   border-radius: 10px;
 }
 
