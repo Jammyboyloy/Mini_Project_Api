@@ -4,7 +4,7 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>All Article</title>
+     <title>Category</title>
      <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/bootstrap.css">
      <link rel="stylesheet" href="../assets/bootstrap-icons/bootstrap-icons.css">
      <link rel="stylesheet" href="../assets/css/style.css">
@@ -56,7 +56,7 @@
                               Post</h5>
                          <ul class="nav flex-column gap-2 px-3">
                               <li class="nav-item">
-                                   <a class="nav-link text-main" href="dashboard.html"><i
+                                   <a class="nav-link text-main active" href="dashboard.html"><i
                                              class="bi bi-speedometer2 me-3 icon"></i>
                                         Dashboard</a>
                               </li>
@@ -66,11 +66,10 @@
                                         <i class="bi bi-calendar me-3 icon"></i> My Article <i
                                              class="bi bi-chevron-down ms-auto arrow"></i>
                                    </a>
-                                   <div class="collapse show" id="myArticle">
+                                   <div class="collapse" id="myArticle">
                                         <ul class="nav flex-column gap-1 mt-1">
                                              <li class="nav-item px-2">
-                                                  <a class="nav-link text-main active" href="allArticle.html">All
-                                                       Articles</a>
+                                                  <a class="nav-link text-main" href="allArticle.html">All Articles</a>
                                              </li>
                                              <li class="nav-item px-2">
                                                   <a class="nav-link text-main" href="createArticle.html">Create
@@ -108,7 +107,8 @@
      <aside class="sidebar border-end position-fixed start-0 py-5 px-3 d-none d-lg-block bg-main">
           <ul class="nav flex-column gap-2">
                <li class="nav-item">
-                    <a class="nav-link nav-text" href="dashboard.html"><i class="bi bi-speedometer2 me-3 icon"></i>
+                    <a class="nav-link nav-text active" href="dashboard.html"><i
+                              class="bi bi-speedometer2 me-3 icon"></i>
                          Dashboard</a>
                </li>
                <li class="nav-item">
@@ -117,10 +117,10 @@
                          <i class="bi bi-calendar me-3 icon"></i> My Article <i
                               class="bi bi-chevron-down ms-auto arrow"></i>
                     </a>
-                    <div class="collapse show" id="myArticle1">
+                    <div class="collapse" id="myArticle1">
                          <ul class="nav flex-column gap-1 mt-1">
                               <li class="nav-item px-2">
-                                   <a class="nav-link nav-text active" href="allArticle.html">All Articles</a>
+                                   <a class="nav-link nav-text" href="allArticle.html">All Articles</a>
                               </li>
                               <li class="nav-item px-2">
                                    <a class="nav-link nav-text" href="createArticle.html">Create Article</a>
@@ -135,37 +135,17 @@
      </aside>
 
      <main class="content p-5 bg-secondary">
-          <div class="container-fluid">
-               <h2 class="text-main">All Article</h2>
-               <p class="text-secondary">Browse all published articles</p>
-
-               <!-- demo content -->
-               <div class="row">
-                    <div class="col-md-4">
-                         <div class="card shadow-sm">
-                              <div class="card-body">Card 1</div>
-                         </div>
-                    </div>
-                    <div class="col-md-4">
-                         <div class="card shadow-sm">
-                              <div class="card-body">Card 2</div>
-                         </div>
-                    </div>
-                    <div class="col-md-4">
-                         <div class="card shadow-sm">
-                              <div class="card-body">Card 2</div>
-                         </div>
-                    </div>
-
-               </div>
+          <div class="container-fluid bg-main rounded-4 shadow-sm pt-3 container-detail">
+             
           </div>
-
+          <div class="py-2"></div>
      </main>
 
      <script src="../assets/bootstrap-5.3.7/js/bootstrap.bundle.min.js"></script>
      <script src="../assets/js/index.js"></script>
      <script src="../assets/js/dashboard.js"></script>
      <script src="../assets/js/logout.js"></script>
+     <script src="../assets/js/detail.js"></script>
 
 
 </body>
