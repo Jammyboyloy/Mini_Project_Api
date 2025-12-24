@@ -46,7 +46,7 @@ fetch(
                        </div>
                        <small
                             class="fs-7 bg-primary w-fit h-fit rounded-4 px-3 text-primary ms-auto ellipsis-cate text-nowrap"
-                            style="padding: 2px;">${item.category.name}</small>
+                            style="padding: 2px;">${item.category}</small>
                   </div>
                   <div class="card-body px-0 pb-0 text-start">
                        <div class="card-img mb-3 w-100" style="height: 150px;">
