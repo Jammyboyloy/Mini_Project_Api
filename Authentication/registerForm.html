@@ -1,11 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Register</title>
+     <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/bootstrap.css">
+     <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/theme.css">
+     <link rel="stylesheet" href="../assets/bootstrap-icons/bootstrap-icons.css">
+     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
-          
+
+<body class="bg-secondary">
+     <div class="d-flex justify-content-center align-items-center min-vh-100 py-4">
+          <div class="container bg-main shadow-sm py-4 px-6 rounded-4 shadow-sm" style="width: 500px;">
+               <h3 class="text-center text-primary fw-medium mb-3">Create Account</h3>
+               <form>
+                    <label class="form-label">First Name : </label>
+                    <div class="position-relative text-secondary mb-2">
+                         <input type="text" id="fname" class="form-control bg-prime fs-text ps-7" placeholder="Enter your first name">
+                         <i class="bi bi-person position-absolute icon-input tran-y"></i>
+                    </div>
+                    <p class="p-0 m-0 fs-6 text-danger"></p>
+
+                    <label class="form-label">Last Name : </label>
+                    <div class="position-relative text-secondary mb-2">
+                         <input type="text" id="lname" class="form-control bg-prime fs-text ps-7" placeholder="Enter your last name">
+                         <i class="bi bi-person position-absolute icon-input tran-y"></i>
+                    </div>
+                    <p class="p-0 m-0 fs-6 text-danger"></p>
+
+                    <label class="form-label">Email : </label>
+                    <div class="position-relative text-secondary mb-2">
+                         <input type="email" id="email" class="form-control bg-prime fs-text ps-7" placeholder="Enter your email">
+                         <i class="bi bi-envelope position-absolute icon-input tran-y"></i>
+                    </div>
+                    <p class="p-0 m-0 fs-6 text-danger"></p>
+
+                    <label class="form-label my-2">Password : </label>
+                    <div class="position-relative text-secondary mb-2">
+                         <input type="password" id="password" class="form-control bg-prime fs-text ps-7" placeholder="Enter your password">
+                         <i class="bi bi-lock position-absolute icon-input tran-y"></i>
+                         <i class="bi bi-eye position-absolute tran-y icon-eye"></i>
+                    </div>
+
+                    <p class="m-0 p-0 fs-6 text-danger"></p>
+                    <label class="form-label my-2">Confirm Password : </label>
+                    <div class="position-relative text-secondary mb-2">
+                         <input type="password" id="cpassword" class="form-control bg-prime fs-text ps-7" placeholder="Confirm your password">
+                         <i class="bi bi-lock position-absolute icon-input tran-y"></i>
+                         <i class="bi bi-eye position-absolute tran-y icon-eye"></i>
+                    </div>
+                    <p class="m-0 p-0 fs-6 text-danger"></p>
+
+                    <button class="btn btn-primary w-100 mt-3">Register</button>
+               </form>
+               <div class="d-flex gap-3 mt-3 align-items-center text-secondary">
+                    <hr class="w-50">
+                    <p class="p-0 m-0 fs-6 text-main">OR</p>
+                    <hr class="w-50">
+               </div>
+               <p class="m-0 fs-6 mt-2 text-center text-main">Already have an account?<a href="../index.html" class="ms-2 text-primary">Login</a></p>
+          </div>
+     </div>
 </body>
+
+<script src="../assets/js/register.js"></script>
+
+
 </html>

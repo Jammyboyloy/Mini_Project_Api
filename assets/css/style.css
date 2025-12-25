@@ -125,7 +125,7 @@ nav-item {
 }
 
 .icon {
-  display: inline-block; 
+  display: inline-block;
   transition: transform 0.4s ease;
 }
 
@@ -155,19 +155,32 @@ nav-item {
   font-size: 18px;
 }
 
-.f-c::placeholder {
-  color: var(--text-prime) !important;
+.icon-eye {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  font-size: 18px;
+  cursor: pointer;
 }
 
-.fs-6{
+.focused {
+  border: none;
+  box-shadow: 0 0 0 0.07rem #0d6efd !important;
+}
+
+.rq {
+  box-shadow: 0 0 0 0.07rem #dc3545 !important;
+}
+
+.fs-6 {
   font-size: 14px !important;
 }
 
-.fs-7{
+.fs-7 {
   font-size: 12px !important;
 }
 
-.fs-8{
+.fs-8 {
   font-size: 10px !important;
 }
 
@@ -180,21 +193,20 @@ nav-item {
 }
 
 .ellipsis {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ellipsis-cate {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 10ch;  
-    display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 10ch;
+  display: inline-block;
 }
 
-
-.card:hover .name{
+.card:hover .name {
   color: var(--text-primary) !important;
 }
 
