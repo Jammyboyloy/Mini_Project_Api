@@ -62,7 +62,7 @@ fetch(
       `;
     });
 
-    document.querySelector(".row").innerHTML = rows;
+    document.querySelector(".dashboard-container").innerHTML = rows;
   });
 
 function detail(id) {
