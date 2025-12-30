@@ -12,7 +12,7 @@ body {
   --text-secondary: oklch(0.446 0.03 256.802);
   --nav-text: oklch(0.373 0.034 259.733);
   --border-color: #e5e7eb;
-  --bg-btn: oklch(0.546 0.245 262.881);
+  --bg-btn: #4f46e5;
 }
 
 .dark-mode {
@@ -60,7 +60,7 @@ body {
 }
 
 .bg-btn:hover {
-  background-color: var(--bg-btn);
+  background-color:#4338ca;
 }
 
 .border-bottom {
@@ -193,22 +193,33 @@ nav-item {
 }
 
 .ellipsis {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
-.ellipsis-cate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 10ch;
-  display: inline-block;
+.btnCanvas i{
+  color: var(--text-color) !important;
 }
 
 .card:hover .name {
   color: var(--text-primary) !important;
 }
+
+.my-toast {
+  position: fixed;
+  bottom: 10px;
+  right: 0;
+  border: 2px solid #dc3545 !important;
+  transform: translateX(120%);
+  transition: transform 0.4s ease;
+}
+
+.my-toast.show {
+  transform: translateX(0);
+  right: 25px;
+}
+
 
 @media (min-width: 992px) {
   .content {

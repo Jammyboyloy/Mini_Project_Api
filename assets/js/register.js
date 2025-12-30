@@ -7,23 +7,34 @@ let email = document.querySelector("#email");
 let password = document.querySelector("#password");
 let cpassword = document.querySelector("#cpassword");
 let p = document.querySelectorAll("p");
+const inputs = [fname, lname, email, password, cpassword];
+const check = [fname, lname];
+const messages = [
+  "First name is required",
+  "Last name is required",
+  "Email is required",
+  "Password is required",
+  "Confirm password is required",
+];
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
-  // p[0].innerHTML = fname.value === "" ? "First name is required" : "";
-  // p[1].innerHTML = lname.value === "" ? "Last name is required" : "";
-  // p[2].innerHTML = email.value === "" ? "Email is required" : "";
-  // p[3].innerHTML = password.value === "" ? "Password is required" : "";
-  // p[4].innerHTML = cpassword.value === "" ? "Confirm password is required" : "";
-  // fname.value === "" ? fname.classList.add("rq") : fname.classList.remove("rq");
-  // lname.value === "" ? lname.classList.add("rq") : lname.classList.remove("rq");
-  // email.value === "" ? email.classList.add("rq") : email.classList.remove("rq");
-  // password.value === ""
-  //   ? password.classList.add("rq")
-  //   : password.classList.remove("rq");
-  // cpassword.value === ""
-  //   ? cpassword.classList.add("rq")
-  //   : cpassword.classList.remove("rq");
+  let isValid = true;
+  inputs.forEach((input, index) => {
+    if (/^\d/.test(input.value)) {
+      p[index].innerHTML = "Cannot start with a number";
+      input.classList.add("rq");
+      isValid = false;
+    }
+
+    if (input.value === "") {
+      p[index].innerHTML = messages[index];
+      input.classList.add("rq");
+      isValid = false;
+    }
+  });
+
+  if (!isValid) return;
 
   fetch(baseUrl + "/auth/register", {
     method: "POST",
@@ -38,102 +49,81 @@ form.addEventListener("submit", (event) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      if (!data.result && data.details) {
-        data.details.forEach((msg) => {
-          if (msg.toLowerCase().includes("first name")) {
-            p[0].innerHTML = msg;
-            fname.classList.add("rq");
-          } else if (msg.toLowerCase().includes("last name")) {
-            p[1].innerHTML = msg;
-            lname.classList.add("rq");
-          } else if (msg.toLowerCase().includes("email")) {
-            p[2].innerHTML = msg;
-            email.classList.add("rq");
-          } else if (
-            msg.toLowerCase().includes("password") &&
-            msg.toLowerCase().includes("confirm") === false
-          ) {
-            p[3].innerHTML = msg;
-            password.classList.add("rq");
-            cpassword.classList.add("rq");
-          } else if (msg.toLowerCase().includes("confirm")) {
-            p[4].innerHTML = msg;
-            cpassword.classList.add("rq");
-          } 
-        });
+      if (!data.result) {
+        if (Array.isArray(data.details)) {
+          data.details.forEach((msg) => {
+            const m = msg.toLowerCase();
+
+            if (m.includes("first name")) {
+              fname.classList.add("rq");
+              p[0].innerHTML = msg;
+            } else if (m.includes("last name")) {
+              lname.classList.add("rq");
+              p[1].innerHTML = msg;
+            } else if (m.includes("email") && !m.includes("used")) {
+              email.classList.add("rq");
+              p[2].innerHTML = msg;
+            } else if (m.includes("password") && !m.includes("confirm")) {
+              password.classList.add("rq");
+              cpassword.classList.add("rq");
+              p[3].innerHTML = msg;
+            } else if (m.includes("confirm")) {
+              cpassword.classList.add("rq");
+              p[4].innerHTML = msg;
+            }
+          });
+        }
+        // email already used
+        if (data.message.toLowerCase().includes("used")) {
+          email.classList.add("rq");
+          p[2].innerHTML = data.message;
+        }
       } else {
-        // Success
         console.log("Registration successful:", data);
       }
-      
-      if(data.message.toLowerCase().includes("used")){
-        p[2].innerHTML = data.message;
-        email.classList.add("rq");
-      } 
-
     });
 });
 
-fname.addEventListener("focus", () => {
-  fname.classList.add("focused");
+inputs.forEach((input) => {
+  input.addEventListener("focus", () => {
+    input.classList.add("focused");
+  });
 });
 
-fname.addEventListener("blur", () => {
-  fname.classList.remove("focused");
-});
+check.forEach((input, index) => {
+  input.addEventListener("blur", () => {
+    if (/^\d/.test(input.value)) {
+      p[index].innerHTML = "Cannot start with a number";
+      input.classList.add("rq");
+    }
+    input.classList.remove("focused");
+  });
 
-fname.addEventListener("input", () => {
-  if (fname.value === "") {
-    fname.classList.remove("rq");
-    p[0].innerHTML = "";
-  }
-  if (fname.value !== "") {
-    p[0].innerHTML = "";
-    fname.classList.remove("rq");
-  }
-});
-
-lname.addEventListener("focus", () => {
-  lname.classList.add("focused");
-});
-
-lname.addEventListener("blur", () => {
-  lname.classList.remove("focused");
-});
-
-lname.addEventListener("input", () => {
-  if (lname.value === "") {
-    lname.classList.remove("rq");
-    p[1].innerHTML = "";
-  }
-  if (lname.value !== "") {
-    p[1].innerHTML = "";
-    lname.classList.remove("rq");
-  }
-});
-
-email.addEventListener("focus", () => {
-  email.classList.add("focused");
+  input.addEventListener("input", () => {
+    if (input.value === "") {
+      input.classList.remove("rq");
+      p[index].innerHTML = "";
+    }
+  });
 });
 
 email.addEventListener("input", () => {
-  if (email.value.includes("@gmail.com")) {
+  if (email.value.includes("@gmail.com") || email.value === "") {
     p[2].innerHTML = "";
     email.classList.remove("rq");
-  }
-  if (email.value === "") {
-    email.classList.remove("rq");
-    p[2].innerHTML = "";
   }
 });
 
 email.addEventListener("blur", () => {
   p[2].innerHTML =
     email.value === ""
-      ? (p[3].innerHTML = "")
+      ? ""
+      : /^\d/.test(email.value)
+      ? "Cannot start with a number"
       : email.value.includes("@gmail.com")
       ? ""
       : "Please enter a valid email address";
+
   email.value === ""
     ? email.classList.remove("focused")
     : email.value.includes("@gmail.com")
@@ -141,43 +131,114 @@ email.addEventListener("blur", () => {
     : email.classList.add("rq");
 });
 
-password.addEventListener("focus", () => {
-  password.classList.add("focused");
+password.addEventListener("input", () => {
+  if (
+    password.value === "" ||
+    /^(?!\d).*\d.*/.test(password.value) ||
+    /[@#$%^&*()_+\-=\[\]{}|;:'",.<>\/?]/.test(password.value) ||
+    /[A-Z]/.test(password.value) ||
+    password.value.length >= 6
+  ) {
+    p[3].innerHTML = "";
+    password.classList.remove("rq");
+  }
 });
 
 password.addEventListener("blur", () => {
+  if (password.value === "") {
+    p[3].innerHTML = "";
+    password.classList.remove("rq");
+  } else if (/^\d/.test(password.value)) {
+    p[3].innerHTML = "Cannot start with a number";
+    password.classList.add("rq");
+  } else if (
+    !/[A-Z]/.test(password.value) &&
+    !/\d/.test(password.value) &&
+    !/[!@#$%^&*()_+\-=\[\]{}|;:'",.<>\/?]/.test(password.value)
+  ) {
+    p[3].innerHTML =
+      "Password must contain at least one uppercase letter, one number, and one special character.";
+    password.classList.add("rq");
+  } else if (
+    !/[!@#$%^&*()_+\-=\[\]{}|;:'",.<>\/?]/.test(password.value) &&
+    !/[A-Z]/.test(password.value)
+  ) {
+    p[3].innerHTML =
+      "Password must contain at least one uppercase letter, and one special character.";
+    password.classList.add("rq");
+  } else if (
+    !/[!@#$%^&*()_+\-=\[\]{}|;:'",.<>\/?]/.test(password.value) &&
+    !/\d/.test(password.value)
+  ) {
+    p[3].innerHTML =
+      "Password must contain at least one number, and one special character.";
+    password.classList.add("rq");
+  } else if (!/[A-Z]/.test(password.value) && !/\d/.test(password.value)) {
+    p[3].innerHTML =
+      "Password must contain at least one uppercase letter, and one number.";
+    password.classList.add("rq");
+  } else if (!/[A-Z]/.test(password.value)) {
+    p[3].innerHTML = "Password must contain at least one uppercase letter.";
+    password.classList.add("rq");
+  } else if (!/\d/.test(password.value)) {
+    p[3].innerHTML = "Password must contain at least one number.";
+    password.classList.add("rq");
+  } else if (!/[!@#$%^&*()_+\-=\[\]{}|;:'",.<>\/?]/.test(password.value)) {
+    p[3].innerHTML = "Password must contain at least one special character.";
+    password.classList.add("rq");
+  } else if (password.value.length < 6) {
+    p[3].innerHTML = "Password must be at least 6 characters long.";
+    password.classList.add("rq");
+  }
   password.classList.remove("focused");
 });
 
 password.addEventListener("input", () => {
   if (password.value === "") {
-    password.classList.remove("rq");
-    p[3].innerHTML = "";
-  }
-  if (password.value !== "") {
     p[3].innerHTML = "";
     password.classList.remove("rq");
   }
-});
-
-cpassword.addEventListener("focus", () => {
-  cpassword.classList.add("focused");
 });
 
 cpassword.addEventListener("blur", () => {
+  if (cpassword.value !== password.value) {
+    p[3].innerHTML = "Passwords do not match";
+    p[4].innerHTML = "Passwords do not match";
+    password.classList.add("rq");
+    cpassword.classList.add("rq");
+  } else {
+    p[3].innerHTML = "";
+    p[4].innerHTML = "";
+    password.classList.remove("rq");
+    cpassword.classList.remove("rq");
+  }
+
+  if (cpassword.value === "") {
+    p[3].innerHTML = "";
+    p[4].innerHTML = "";
+    password.classList.remove("rq");
+    cpassword.classList.remove("rq");
+  }
   cpassword.classList.remove("focused");
 });
 
-cpassword.addEventListener("input", () => {
-  if (cpassword.value === "") {
-    cpassword.classList.remove("rq");
-    p[4].innerHTML = "";
+cpassword.addEventListener("focus", () => {
+  const passwordValid =
+    /^(?!\d).*\d.*/.test(password.value) &&
+    /[@#$%^&*()_+\-=\[\]{}|;:'",.<>\/?]/.test(password.value) &&
+    /[A-Z]/.test(password.value) &&
+    password.value.length >= 6;
+
+  if (!passwordValid) {
+    password.focus();
+    password.classList.add("rq");
+    p[3].innerHTML = "Please complete your password first";
+    return;
   }
-  if (cpassword.value !== "") {
-    p[4].innerHTML = "";
-    cpassword.classList.remove("rq");
-  }
+
+  cpassword.classList.add("focused");
 });
+
 
 document.querySelectorAll(".icon-eye").forEach((eye) => {
   eye.onclick = () => {
