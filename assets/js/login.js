@@ -14,6 +14,7 @@ form.addEventListener("submit", (event) => {
   password.value === ""
     ? password.classList.add("rq")
     : password.classList.remove("rq");
+    
   fetch(baseUrl + "/auth/login", {
     method: "POST",
     headers: {
@@ -26,10 +27,13 @@ form.addEventListener("submit", (event) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      data.result == false
-        ? (p.innerText = data.message)
-        : (localStorage.setItem("token", data.data.token),
-          (location.href = "Article/dashboard.html"));
+      if (data.result === true) {
+        localStorage.setItem("token", data.data.token);
+        location.href = "Article/dashboard.html";
+      }
+      if(data.email !== email.value && data.password !== password.value && email.value !== "" && password.value !== ""){
+        showToast("Invalid email or password.");
+      }
     });
 });
 
@@ -38,13 +42,9 @@ email.addEventListener("focus", () => {
 });
 
 email.addEventListener("input", () => {
-  if (email.value.includes("@gmail.com")) {
+  if (email.value.includes("@gmail.com") || email.value === "") {
     p[0].innerHTML = "";
     email.classList.remove("rq");
-  }
-  if (email.value === "") {
-    email.classList.remove("rq");
-    p[0].innerHTML = "";
   }
 });
 
@@ -71,14 +71,8 @@ password.addEventListener("blur", () => {
 });
 
 password.addEventListener("input", () => {
-  if (password.value === "") {
     password.classList.remove("rq");
     p[1].innerHTML = "";
-  }
-  if (password.value !== "") {
-    p[1].innerHTML = "";
-    password.classList.remove("rq");
-  }
 });
 
 const iconEye = document.querySelector(".icon-eye");
@@ -87,3 +81,11 @@ iconEye.addEventListener("click", () => {
   iconEye.classList.toggle("bi-eye");
   iconEye.classList.toggle("bi-eye-slash");
 });
+
+function showToast(msg) {
+  const toast = document.querySelector(".my-toast");
+  toast.innerHTML = `<i class="bi bi-exclamation-circle-fill me-2 fs-5"></i> ${msg}`;
+  toast.classList.add("show");
+
+  setTimeout(() => toast.classList.remove("show"), 3000);
+}

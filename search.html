@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Category</title>
+
+  <style>
+    .highlight {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <input type="text" id="searchCategory" placeholder="Search..." />
+  <ul></ul>
+  <button id="showMore">Show more</button>
+
+  <script>
+    let input = document.querySelector("#searchCategory");
+    let ul = document.querySelector("ul");
+    let btn = document.querySelector("#showMore");
+    let baseUrl = "http://blogs.csm.linkpc.net/api/v1";
+
+    let page = 1;
+
+    function highlight(text, keyword) {
+      if (!keyword) return text;
+      const regex = new RegExp(`(${keyword})`, "gi");
+      return text.replace(regex, `<span class="highlight">$1</span>`);
+    }
+
+    function category(keyword = "") {
+      fetch(`${baseUrl}/categories?_page=${page}&_per_page=10&sortBy=name&sortDir=ASC&search=${keyword}`)
+        .then(res => res.json())
+        .then(res => {
+          let items = "";
+
+          res.data.items.forEach(item => {
+            const name = highlight(item.name, keyword);
+            items += `<li>${name}</li>`;
+          });
+
+          if (page === 1) {
+            ul.innerHTML = items;
+          } else {
+            ul.innerHTML += items;
+          }
+
+          btn.style.display = res.data.meta.hasNextPage ? "block" : "none";
+        });
+    }
+
+    // first load
+    category();
+
+    // show more
+    btn.addEventListener("click", () => {
+      page++;
+      category(input.value.trim());
+    });
+
+    // search
+    input.addEventListener("input", () => {
+      page = 1;
+      category(input.value.trim());
+    });
+  </script>
+
+</body>
+</html>
