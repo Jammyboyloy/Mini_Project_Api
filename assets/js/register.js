@@ -131,6 +131,8 @@ email.addEventListener("blur", () => {
     : email.classList.add("rq");
 });
 
+let prevPassword = password.value;
+
 password.addEventListener("input", () => {
   if (
     password.value === "" ||
@@ -142,6 +144,14 @@ password.addEventListener("input", () => {
     p[3].innerHTML = "";
     password.classList.remove("rq");
   }
+
+  if (cpassword.value !== "" && password.value !== prevPassword) {
+    cpassword.value = "";
+    cpassword.classList.remove("rq", "focused");
+    p[4].innerHTML = "";
+  }
+
+  prevPassword = password.value; 
 });
 
 password.addEventListener("blur", () => {
@@ -193,13 +203,6 @@ password.addEventListener("blur", () => {
   password.classList.remove("focused");
 });
 
-password.addEventListener("input", () => {
-  if (password.value === "") {
-    p[3].innerHTML = "";
-    password.classList.remove("rq");
-  }
-});
-
 cpassword.addEventListener("blur", () => {
   if (cpassword.value !== password.value) {
     p[3].innerHTML = "Passwords do not match";
@@ -225,7 +228,7 @@ cpassword.addEventListener("blur", () => {
 cpassword.addEventListener("focus", () => {
   const passwordValid =
     /^(?!\d).*\d.*/.test(password.value) &&
-    /[@#$%^&*()_+\-=\[\]{}|;:'",.<>\/?]/.test(password.value) &&
+    /[!@#$%^&*()_+\-=\[\]{}|;:'",.<>\/?]/.test(password.value) &&
     /[A-Z]/.test(password.value) &&
     password.value.length >= 6;
 
@@ -239,6 +242,14 @@ cpassword.addEventListener("focus", () => {
   cpassword.classList.add("focused");
 });
 
+cpassword.addEventListener("input", () => {
+  if (password.value === cpassword.value) {
+    p[3].innerHTML = "";
+    p[4].innerHTML = "";
+    password.classList.remove("rq");
+    cpassword.classList.remove("rq");
+  }
+});
 
 document.querySelectorAll(".icon-eye").forEach((eye) => {
   eye.onclick = () => {
