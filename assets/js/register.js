@@ -1,4 +1,3 @@
-let baseUrl = "http://blogs.csm.linkpc.net/api/v1";
 // Resgister
 const form = document.querySelector("form");
 let fname = document.querySelector("#fname");
