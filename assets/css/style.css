@@ -60,7 +60,15 @@ body {
 }
 
 .bg-btn:hover {
-  background-color:#4338ca;
+  background-color: #4338ca;
+}
+
+.bg-btn:active,
+.bg-btn:focus,
+.bg-btn:focus-visible {
+  background-color: #4338ca !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 .border-bottom {
@@ -198,7 +206,7 @@ nav-item {
   text-overflow: ellipsis !important;
 }
 
-.btnCanvas i{
+.btnCanvas i {
   color: var(--text-color) !important;
 }
 
@@ -219,7 +227,6 @@ nav-item {
   transform: translateX(0);
   right: 25px;
 }
-
 
 @media (min-width: 992px) {
   .content {
