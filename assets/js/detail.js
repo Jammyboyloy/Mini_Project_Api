@@ -1,5 +1,3 @@
-let baseUrl = "http://blogs.csm.linkpc.net/api/v1";
-let token = localStorage.getItem("token");
 let id = sessionStorage.getItem("idArticle");
 
 fetch(baseUrl + `/articles/${id}`, {
