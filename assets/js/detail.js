@@ -36,7 +36,7 @@ fetch(baseUrl + `/articles/${id}`, {
               }</small>
             </div>
             <h5 class="text-main fw-bold">${item.data.title}</h5>
-            <p class="text-secondary fs-6 mt-1">${htmlText}</p>
+            <div class="text-danger fs-6 mt-1">${htmlText}</div>
           </div>
       </div>  
   `;

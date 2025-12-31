@@ -40,7 +40,7 @@ function showDashboard() {
         rows += `
              <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="card shadow-sm rounded-2 bg-main flex-fill d-flex flex-column h-100 py-2">
-                    <button class="btn pb-0" onclick="detail(${item.id})">
+                    <button class="btn pb-0 border-0" onclick="detail(${item.id})">
                       <div class="card-header p-0 bg-main border-0 d-flex align-items-center gap-2">
                            <img src="${item.creator.avatar}"
                                 alt="" class="img-fluid object-fit-cover rounded-circle"
