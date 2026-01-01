@@ -2,23 +2,307 @@
 <html lang="en">
 
 <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Document</title>
-     <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/bootstrap.css">
-     <link rel="stylesheet" href="../assets/bootstrap-icons/bootstrap-icons.css">
-     <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/theme.css">
-     <link rel="stylesheet" href="../assets/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    input:disabled {
+      background-color: var(--bg-main) !important;
+    }
+  </style>
 </head>
 
-<body>
+<body class="bg-secondary">
+
+  <header>
+    <nav class="navbar fixed-top border-bottom bg-main" style="height: 75px;">
+      <div class="container-fluid px-3 d-flex align-items-center gap-3">
+        <div class="d-flex gap-3">
+          <button class="btn fs-4 p-0 m-0 btnCanvas d-block d-lg-none" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+            <i class="bi bi-list"></i>
+          </button>
+          <a href="dashboard.html" class="navbar-brand text-primary fs-4 p-0 m-0">Post</a>
+        </div>
+
+        <div class="d-flex gap-3 ms-auto">
+          <div class="text-main user d-none d-md-block">
+
+          </div>
+          <div class="dropdown bg-main">
+            <a class="userProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+
+            <ul class="dropdown-menu dropdown-menu-end px-2 bg-main border">
+              <li><a class="dropdown-item nav-text" href="../Profile/Myprofile.html"><i class="bi bi-person me-2"></i>
+                  Profile</a></li>
+              <li>
+                <a type="button" class="dropdown-item nav-text" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <i class="bi bi-arrow-bar-right me-2 text-danger"></i> Log out
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <button id="theme-toggle" class="fs-4 text-main border-0 bg-main">
+          <i class="bi bi-sun" id="sun-icon"></i>
+          <i class="bi bi-moon" id="moon-icon" style="display: none;"></i>
+        </button>
 
 
-     <script src="../assets/bootstrap-5.3.7/js/bootstrap.bundle.min.js"></script>
-     <script src="../assets/js/index.js"></script>
-     <script src="../assets/js/baseUrl.js"></script>
-     <script src="../assets/js/Myprofile.js"></script>
-     <script src="../assets/js/getProfile.js"></script>
+        <div class="offcanvas offcanvas-start border-end" style="width: 250px;" data-bs-scroll="true" tabindex="-1"
+          id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+          <h5 class="offcanvas-title border-bottom py-2 mb-3 px-3" id="offcanvasWithBothOptionsLabel">
+            Post</h5>
+          <ul class="nav flex-column gap-2 px-3">
+            <li class="nav-item">
+              <a class="nav-link text-main" href="dashboard.html"><i class="bi bi-speedometer2 me-3 icon"></i>
+                Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-main d-flex" data-bs-toggle="collapse" href="#myArticle" role="button"
+                aria-expanded="false" aria-controls="myArticleDropdown">
+                <i class="bi bi-calendar me-3 icon"></i> My Article <i class="bi bi-chevron-down ms-auto arrow"></i>
+              </a>
+              <div class="collapse" id="myArticle">
+                <ul class="nav flex-column gap-1 mt-1">
+                  <li class="nav-item px-2">
+                    <a class="nav-link text-main" href="allArticle.html">All Articles</a>
+                  </li>
+                  <li class="nav-item px-2">
+                    <a class="nav-link text-main" href="createArticle.html">Create
+                      Article</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-main" href="category.html"><i class="bi bi-box me-3 icon"></i>
+                Category</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-3 bg-main">
+          <div class="modal-body text-center">
+            <h5 class="text-danger fw-medium mb-3">Logout</h5>
+            <p class="text-secondary">Are you sure you want to logout?</p>
+            <button class="btn btn-outline-secondary px-5 py-2" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-danger ms-2 px-5 py-2" id="btnLogout">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <aside class="sidebar border-end position-fixed start-0 py-5 px-3 d-none d-lg-block bg-main">
+    <ul class="nav flex-column gap-2">
+      <li class="nav-item">
+        <a class="nav-link nav-text" href="dashboard.html"><i class="bi bi-speedometer2 me-3 icon"></i>
+          Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link nav-text d-flex" data-bs-toggle="collapse" href="#myArticle1" role="button"
+          aria-expanded="false" aria-controls="myArticleDropdown1">
+          <i class="bi bi-calendar me-3 icon"></i> My Article <i class="bi bi-chevron-down ms-auto arrow"></i>
+        </a>
+        <div class="collapse" id="myArticle1">
+          <ul class="nav flex-column gap-1 mt-1">
+            <li class="nav-item px-2">
+              <a class="nav-link nav-text" href="allArticle.html">All Articles</a>
+            </li>
+            <li class="nav-item px-2">
+              <a class="nav-link nav-text" href="createArticle.html">Create Article</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link nav-text" href="category.html"><i class="bi bi-box me-3 icon"></i> Category</a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="content p-5 bg-secondary">
+    <div class="container-fluid bg-main p-5 shadow-sm">
+      <div class="row g-5">
+        <div class="col-lg-4">
+          <div class="card border-0 bg-secondary py-3">
+            <div class="position-relative mx-auto" style="width: 150px; height: 150px;">
+              <img src="https://i.pinimg.com/736x/8b/ba/24/8bba2497ce403cd2e183316111a72c80.jpg"
+                class="rounded-circle border p-2 w-100 h-100" alt="" />
+              <div class="dropdown position-absolute bg-main rounded-circle" style="bottom: 35px; right: -9px;">
+                <span class="d-flex justify-content-center align-items-center bg-btn text-white rounded-circle"
+                  data-bs-toggle="dropdown" style="width: 30px; height: 30px; cursor: pointer;">
+                  <i class="bi bi-pencil fs-6"></i>
+                </span>
+
+                <ul class="dropdown-menu px-2 bg-main border">
+                  <li>
+                    <input type="file" id="uploadImage" accept="image/*" style="display: none;">
+                    <label for="uploadImage" class="btn dropdown-item mb-1 nav-text">
+                      <i class="bi bi-camera-fill me-2"></i> Change Profile
+                    </label>
+                  </li>
+                  <li>
+                    <button class="btn dropdown-item nav-text" type="button" data-bs-toggle="modal"
+                      data-bs-target="#exampleModal3">
+                      <i class="bi bi-trash text-danger me-2"></i> Remove
+                      Profile
+                    </button>
+                  </li>
+                </ul>
+                <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content rounded-3 bg-main">
+                      <div class="modal-body text-center">
+                        <h5 class="text-danger fw-medium mb-3">Remove Profile</h5>
+                        <p class="text-secondary">Are you sure you want to remove profile?</p>
+                        <button class="btn btn-outline-secondary px-5 py-2" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-danger ms-2 px-5 py-2" id="removeProfile">Remove</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="card-body py-2">
+              <h6 class="text-main text-center mb-3">@Your Name</h6>
+              <div class="d-flex justify-content-center gap-3">
+                <button class="btn btn-danger px-4" type="button" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal2">Log
+                  out</button>
+                <button class="btn bg-btn text-white px-4" type="button" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal4">Edit Info</button>
+                <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content rounded-3 bg-main">
+                      <div class="modal-body text-center">
+                        <h5 class="text-danger fw-medium mb-3">Logout</h5>
+                        <p class="text-secondary">Are you sure you want to logout?</p>
+                        <button class="btn btn-outline-secondary px-5 py-2" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-danger ms-2 px-5 py-2" id="btnLogout2">Logout</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel2"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content rounded-3 bg-main">
+                      <div class="modal-body">
+                        <h5 class="text-primary fw-medium mb-3 text-center">Edit Info</h5>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-12">
+                              <label class="form-label my-2 text-main">First Name : </label>
+                              <div class="position-relative text-secondary mb-2 text-main">
+                                <input type="text" id="" class="form-control bg-prime fs-text ps-7 border"
+                                  placeholder="Enter your first name" disabled>
+                                <i class="bi bi-person position-absolute icon-input tran-y"></i>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <label class="form-label my-2 text-main">Last Name : </label>
+                              <div class="position-relative text-secondary mb-2 text-main">
+                                <input type="text" id="" class="form-control bg-prime fs-text ps-7 border"
+                                  placeholder="Enter your first name" disabled>
+                                <i class="bi bi-person position-absolute icon-input tran-y"></i>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <label class="form-label my-2 text-main">Email : </label>
+                              <div class="position-relative text-secondary mb-2 text-main">
+                                <input type="email" id="" class="form-control bg-prime fs-text ps-7 border"
+                                  placeholder="Enter your first name" disabled>
+                                <i class="bi bi-envelope position-absolute icon-input tran-y"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-3">
+                          <button class="btn btn-outline-secondary px-5 py-2" data-bs-dismiss="modal">Cancel</button>
+                          <button class="btn bg-btn text-white ms-2 px-5 py-2 text-center" id="btnEdit">Save</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="row d-flex">
+            <div class="col-lg-6">
+              <label class="form-label my-2 text-main">First Name : </label>
+              <div class="position-relative text-secondary mb-2 text-main">
+                <input type="text" id="fname" class="form-control bg-prime fs-text ps-7 border"
+                  placeholder="Enter your first name" disabled>
+                <i class="bi bi-person position-absolute icon-input tran-y"></i>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <label class="form-label my-2 text-main">Last Name : </label>
+              <div class="position-relative text-secondary mb-2 text-main">
+                <input type="text" id="lname" class="form-control bg-prime fs-text ps-7 border"
+                  placeholder="Enter your first name" disabled>
+                <i class="bi bi-person position-absolute icon-input tran-y"></i>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <label class="form-label my-2 text-main">Email : </label>
+              <div class="position-relative text-secondary mb-2 text-main">
+                <input type="email" id="email" class="form-control bg-prime fs-text ps-7 border"
+                  placeholder="Enter your first name" disabled>
+                <i class="bi bi-envelope position-absolute icon-input tran-y"></i>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <label class="form-label my-2 text-main">Register at : </label>
+              <div class="position-relative text-secondary mb-2 text-main">
+                <input type="email" id="registerAt" class="form-control bg-prime fs-text ps-7 border"
+                  placeholder="Enter your first name" disabled>
+                <i class="bi bi-calendar3 position-absolute icon-input tran-y"></i>
+              </div>
+            </div>
+            <div class="col-lg-6 mx-auto">
+              <label class="form-label my-2 text-main">Username : </label>
+              <div class="position-relative text-secondary mb-2 text-main">
+                <input type="email" id="username" class="form-control bg-prime fs-text ps-7 border"
+                  placeholder="Enter your first name" disabled>
+                <i class="bi bi-person position-absolute icon-input tran-y"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+
+  <script src="../assets/bootstrap-5.3.7/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/index.js"></script>
+  <script src="../assets/js/baseUrl.js"></script>
+  <script src="../assets/js/Myprofile.js"></script>
+  <script src="../assets/js/getProfile.js"></script>
+  <script src="../assets/js/logout.js"></script>
 
 </body>
 
