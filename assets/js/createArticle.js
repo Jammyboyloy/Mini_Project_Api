@@ -126,6 +126,12 @@ function validateForm() {
   if(category.value === ""){
     category.classList.add("rq");
   }
+  if (thumbnail.value === ""){
+    thumbnail.classList.add("rq");
+  }
+  if (quill.getText().trim() === ""){
+    Description.classList.add("rq");
+  }
 
 
   if (title.value === "" || category.value === "" || quill.getText().trim() === "") {
@@ -148,10 +154,13 @@ category.addEventListener("change", () => {
   }
 });
 thumbnail.addEventListener("change", () => {
-  if (thumbnail.value !== "") errorThumbnail.textContent = "";
+  if (thumbnail.value !== "") {
+    thumbnail.classList.remove("rq");
+    errorThumbnail.textContent = "";}
 });
 Description.addEventListener("keyup", () => {
   if (quill.getText().trim() !== "") {
+    Description.classList.remove("rq");
     errorDescription.textContent = "";
   }
 });
