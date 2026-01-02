@@ -6,8 +6,14 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Category</title>
      <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/bootstrap.css">
+     <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/theme.css">
      <link rel="stylesheet" href="../assets/bootstrap-icons/bootstrap-icons.css">
      <link rel="stylesheet" href="../assets/css/style.css">
+     <style>
+          .searchCategory::placeholder {
+               color: var(--text-secondary);
+          }
+     </style>
 </head>
 
 <body class="bg-secondary">
@@ -107,8 +113,7 @@
      <aside class="sidebar border-end position-fixed start-0 py-5 px-3 d-none d-lg-block bg-main">
           <ul class="nav flex-column gap-2">
                <li class="nav-item">
-                    <a class="nav-link nav-text" href="dashboard.html"><i
-                              class="bi bi-speedometer2 me-3 icon"></i>
+                    <a class="nav-link nav-text" href="dashboard.html"><i class="bi bi-speedometer2 me-3 icon"></i>
                          Dashboard</a>
                </li>
                <li class="nav-item">
@@ -129,7 +134,8 @@
                     </div>
                </li>
                <li class="nav-item">
-                    <a class="nav-link nav-text active" href="category.html"><i class="bi bi-box me-3 icon"></i> Category</a>
+                    <a class="nav-link nav-text active" href="category.html"><i class="bi bi-box me-3 icon"></i>
+                         Category</a>
                </li>
           </ul>
      </aside>
@@ -139,16 +145,89 @@
                <h2 class="text-main">All Article</h2>
                <p class="text-secondary">Browse all published articles</p>
 
-               
+               <section>
+                    <div class="row">
+                         <div class="col-6">
+                              <div class="position-relative text-secondary mb-2">
+                                   <input type="search"
+                                        class="form-control bg-prime fs-text ps-7 bg-main border searchCategory"
+                                        placeholder="Search category..." id="searchCategory">
+                                   <i class="bi bi-search position-absolute icon-input tran-y"></i>
+                              </div>
+                         </div>
+                         <div class="col-6">
+                              <div class="text-end">
+                                   <button class="btn bg-btn text-white">Create Category</button>
+                              </div>
+                         </div>
+                    </div>
+               </section>
+
+               <section class="mt-5">
+                    <div class="table-wrapper shadow-sm">
+                         <table class="table mb-0 border" id="table-darkmode">
+                              <thead class="thead-custom">
+                                   <tr>
+                                        <th class="py-3 ps-4">Category Name</th>
+                                        <th class="py-3 pe-4 text-end">Action</th>
+                                   </tr>
+                              </thead>
+                              <tbody id="tbody"></tbody>
+                         </table>
+                    </div>
+               </section>
+
+               <section class="mt-4">
+                    <div class="row">
+                         <div class="col-6 text-secondary" id="showingPage"></div>
+                         <div class="col-6 d-flex justify-content-end">
+                              <nav aria-label="Page navigation">
+                                   <ul class="pagination" id="pagination"></ul>
+                              </nav>
+                         </div>
+                    </div>
+               </section>
           </div>
 
      </main>
+
+     <!-- modol Delete category -->
+     <div class="modal fade" id="categoryDelete" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content rounded-3 bg-main">
+                    <div class="modal-body text-center">
+                         <h5 class="text-danger fw-medium mb-3">Delete Categories</h5>
+                         <p class="text-secondary">Are you sure you want to delete Categories?</p>
+                         <button class="btn btn-outline-secondary px-5 py-2" data-bs-dismiss="modal">Cancel</button>
+                         <button class="btn btn-danger ms-2 px-5 py-2" id="deleteCategory">Delete</button>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+     <!-- modol Edit category -->
+     <div class="modal fade" id="categoryEdit" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content rounded-3 bg-main">
+                    <div class="modal-body text-center">
+                         <h5 class="text-danger fw-medium mb-3">Edit Categories</h5>
+                         <!-- <p class="text-secondary">Are you sure you want to remove profile?</p> -->
+                         <input type="text" class="border ">
+                         <button class="btn btn-outline-secondary px-5 py-2" data-bs-dismiss="modal">Cancel</button>
+                         <button class="btn btn-danger ms-2 px-5 py-2" id="editCategory">Save</button>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+
 
      <script src="../assets/bootstrap-5.3.7/js/bootstrap.bundle.min.js"></script>
      <script src="../assets/js/index.js"></script>
      <script src="../assets/js/baseUrl.js"></script>
      <script src="../assets/js/getProfile.js"></script>
      <script src="../assets/js/logout.js"></script>
+     <script src="../assets/js/category.js"></script>
 
 
 </body>
