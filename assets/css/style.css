@@ -223,7 +223,7 @@ table td {
   color: var(--text-primary) !important;
 }
 
-.my-toast {
+.my-toast-error {
   position: fixed;
   bottom: 10px;
   right: 0;
@@ -232,7 +232,21 @@ table td {
   transition: transform 0.4s ease;
 }
 
-.my-toast.show {
+.my-toast-error.show {
+  transform: translateX(0);
+  right: 25px;
+}
+
+.my-toast-success {
+  position: fixed;
+  bottom: 10px;
+  right: 0;
+  border: 2px solid #198754 !important;
+  transform: translateX(120%);
+  transition: transform 0.4s ease;
+}
+
+.my-toast-success.show {
   transform: translateX(0);
   right: 25px;
 }
