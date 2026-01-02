@@ -1,14 +1,14 @@
-const perPage = 5;
+const perPage = 10;
 let currentPage = 1;
 let tbody = document.querySelector("#tbody");
 let showPage = document.querySelector("#showingPage");
 let pagination = document.querySelector("#pagination");
-let searchInput = document.querySelector("#searchCategory"); 
-// darkmode & light
-
+let searchInput = document.querySelector("#searchCategory");
+let btnDelete = document.querySelector("#deleteCategory");
+let btnEdit = document.querySelector("#editCategory")
 
 function escapeRegex(text) {
-  return text.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  return text.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 }
 
 function loadCategories(page = 1, search = "") {
@@ -34,7 +34,6 @@ function loadCategories(page = 1, search = "") {
       } else {
         item.forEach((data) => {
           let categoryName = data.name;
-
           if (search.trim() !== "") {
             const searchTerm = escapeRegex(search.trim());
             const regex = new RegExp(`(${searchTerm})`, "gi"); // global + case-insensitive
@@ -48,13 +47,19 @@ function loadCategories(page = 1, search = "") {
             <tr class="align-middle">
               <td class="py-3 ps-4">${categoryName}</td>
               <td class="py-3 pe-4 text-end">
-                <button class="btn btn-sm nav-text me-1" data-bs-toggle="modal"
-                  data-bs-target="#categoryEdit">
+                <button
+                  class="btn btn-sm nav-text me-1"
+                  data-bs-toggle="modal"
+                  data-bs-target="#categoryEdit"
+                  onclick="openEditModal('${data.id}', '${data.name}')">
                   <i class="bi bi-pencil-square"></i>
                 </button>
-                <button class="btn btn-sm nav-text"  data-bs-toggle="modal"
+                <button
+                  class="btn btn-sm nav-text"
+                  onclick="openDeleteModal('${data.id}')"
+                  data-bs-toggle="modal"
                   data-bs-target="#categoryDelete">
-                  <i class="bi bi-trash3"></i> 
+                  <i class="bi bi-trash3"></i>
                 </button>
               </td>
             </tr>
@@ -64,7 +69,10 @@ function loadCategories(page = 1, search = "") {
 
       tbody.innerHTML = row;
       const startItem = (meta.currentPage - 1) * meta.itemPerPage + 1;
-      const endItem = Math.min(meta.currentPage * meta.itemPerPage, meta.totalItems);
+      const endItem = Math.min(
+        meta.currentPage * meta.itemPerPage,
+        meta.totalItems
+      );
       showPage.innerText =
         meta.totalItems === 0
           ? "Showing 0 entries"
@@ -73,7 +81,6 @@ function loadCategories(page = 1, search = "") {
       createPagination(meta);
     });
 }
-
 
 // link new page
 function createPagination(meta) {
@@ -151,30 +158,123 @@ searchInput.addEventListener("blur", () => {
   searchInput.classList.remove("focused");
 });
 
-// delete
+// create category
+document.getElementById("createNewCategory").onclick = () => {
+  const name = document.getElementById("createNewCategoryName").value.trim();
 
-document.querySelector("#deleteCategory").onclick = () =>{
- deleteCategory(id)
-}
-
-function deleteCategory (id){
- fetch(`${baseUrl}/categories/${id}`,{
-  method : "DELETE",
-  headers :{
-    "Content-Type": "application/json",
-    "Authorization": "Bearer " + localStorage.getItem("token")
+  if (!name) {
+    showError("Category name cannot be empty");
+    return;
   }
- })
- .then(res => res.json())
- .then(res =>{
-   console.log(res.data.id);
-   
- })
- 
+
+  fetch(`${baseUrl}/categories`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({ name: name })
+  })
+  .then(res => res.json())
+  .then(res => {
+    if (!res.result) {
+      showError("Failed to create category");
+      return;
+    }
+    showSuccess("Category created successfully!");
+
+    bootstrap.Modal.getInstance(document.getElementById("createCategory")).hide();
+
+    document.getElementById("createNewCategoryName").value = "";
+
+    loadCategories(currentPage, searchInput.value);
+  })
+  .catch(err => {
+    console.error(err);
+    showError("Something went wrong. Please try again.");
+  });
+};
+
+
+// delete
+let deleteID = null;
+
+function openDeleteModal(id) {
+  deleteID = id;
+}
+btnDelete.onclick = () => {
+  if (!deleteID) return;
+
+  fetch(`${baseUrl}/categories/${deleteID}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    }
+  })
+    .then((res) => res.json())
+    .then(() => {
+      bootstrap.Modal.getInstance(
+        document.getElementById("categoryDelete")
+      ).hide();
+      showSuccess("Category Delete successfully!");
+      loadCategories(currentPage, searchInput.value);
+      deleteID = null;
+    });
+};
+
+
+//edit catefory
+let editID = null;
+function openEditModal(id, name) {
+  editID = id; 
+  document.querySelector("#editCategoryName").value = name;
+}
+btnEdit.onclick = () =>{
+  const newName = document.querySelector("#editCategoryName").value.trim();
+  if(!newName){
+    showError("Category name cannot be empty");
+    return;
+  }
+  fetch(`${baseUrl}/categories/${editID}`,{
+    method : "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+    body : JSON.stringify({
+      name : newName
+    })
+  })
+  .then(res =>res.json())
+  .then(res =>{
+    if (!res.result){
+      showError("Update failed");
+      return;
+    }
+    showSuccess("Category updated successfully!");
+    bootstrap.Modal.getInstance(document.getElementById("categoryEdit")).hide();
+    loadCategories(currentPage, searchInput.value);
+    editID = null;
+  })
 }
 
+// show toast
+function showError(msg) {
+  const toastError = document.querySelector(".my-toast-error");
+  toastError.innerHTML = `<i class="bi bi-exclamation-circle-fill me-2 fs-5"></i> ${msg}`;
+  toastError.classList.add("show");
 
+  setTimeout(() => toastError.classList.remove("show"), 3000);
+}
 
+function showSuccess(msg) {
+  const toastSuccess = document.querySelector(".my-toast-success");
+  toastSuccess.innerHTML = `<i class="bi bi-check-circle-fill me-2 fs-5"></i> ${msg}`;
+  toastSuccess.classList.add("show");
+
+  setTimeout(() => toastSuccess.classList.remove("show"), 3000);
+}
 
 
 
