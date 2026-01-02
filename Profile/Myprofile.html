@@ -13,6 +13,7 @@
     input:disabled {
       background-color: var(--bg-main) !important;
     }
+    
   </style>
 </head>
 
@@ -137,8 +138,7 @@
         <div class="col-lg-4">
           <div class="card border-0 bg-secondary py-3">
             <div class="position-relative mx-auto" style="width: 150px; height: 150px;">
-              <img src="https://i.pinimg.com/736x/8b/ba/24/8bba2497ce403cd2e183316111a72c80.jpg"
-                class="rounded-circle border p-2 w-100 h-100" alt="" />
+              <img id="avatar" class="rounded-circle border p-2 w-100 h-100" alt="" />
               <div class="dropdown position-absolute bg-main rounded-circle" style="bottom: 35px; right: -9px;">
                 <span class="d-flex justify-content-center align-items-center bg-btn text-white rounded-circle"
                   data-bs-toggle="dropdown" style="width: 30px; height: 30px; cursor: pointer;">
@@ -174,19 +174,15 @@
                   </div>
                 </div>
               </div>
-
             </div>
-
             <div class="card-body py-2">
               <h6 class="text-main text-center mb-3">@Your Name</h6>
               <div class="d-flex justify-content-center gap-3">
                 <button class="btn btn-danger px-4" type="button" data-bs-toggle="modal"
-                  data-bs-target="#exampleModal2">Log
-                  out</button>
+                  data-bs-target="#exampleModal2">Log out</button>
                 <button class="btn bg-btn text-white px-4" type="button" data-bs-toggle="modal"
                   data-bs-target="#exampleModal4">Edit Info</button>
-                <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2"
-                  aria-hidden="true">
+                <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content rounded-3 bg-main">
                       <div class="modal-body text-center">
@@ -198,8 +194,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel2"
-                  aria-hidden="true">
+                <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content rounded-3 bg-main">
                       <div class="modal-body">
@@ -208,25 +203,22 @@
                           <div class="row">
                             <div class="col-12">
                               <label class="form-label my-2 text-main">First Name : </label>
-                              <div class="position-relative text-secondary mb-2 text-main">
-                                <input type="text" id="" class="form-control bg-prime fs-text ps-7 border"
-                                  placeholder="Enter your first name" disabled>
+                              <div class="position-relative text-main mb-2">
+                                <input type="text" id="fname" class="form-control bg-main fs-text ps-7 border text-main">
                                 <i class="bi bi-person position-absolute icon-input tran-y"></i>
                               </div>
                             </div>
                             <div class="col-12">
                               <label class="form-label my-2 text-main">Last Name : </label>
-                              <div class="position-relative text-secondary mb-2 text-main">
-                                <input type="text" id="" class="form-control bg-prime fs-text ps-7 border"
-                                  placeholder="Enter your first name" disabled>
+                              <div class="position-relative text-main mb-2">
+                                <input type="text" id="lname" class="form-control bg-main fs-text ps-7 border text-main">
                                 <i class="bi bi-person position-absolute icon-input tran-y"></i>
                               </div>
                             </div>
                             <div class="col-12">
                               <label class="form-label my-2 text-main">Email : </label>
-                              <div class="position-relative text-secondary mb-2 text-main">
-                                <input type="email" id="" class="form-control bg-prime fs-text ps-7 border"
-                                  placeholder="Enter your first name" disabled>
+                              <div class="position-relative text-main mb-2">
+                                <input type="email" id="email1" class="form-control bg-main fs-text ps-7 border text-main">
                                 <i class="bi bi-envelope position-absolute icon-input tran-y"></i>
                               </div>
                             </div>
@@ -237,7 +229,6 @@
                           <button class="btn btn-outline-secondary px-5 py-2" data-bs-dismiss="modal">Cancel</button>
                           <button class="btn bg-btn text-white ms-2 px-5 py-2 text-center" id="btnEdit">Save</button>
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -250,58 +241,51 @@
         <div class="col-lg-8">
           <div class="row d-flex">
             <div class="col-lg-6">
+              <label class="form-label my-2 text-main">Profile ID : </label>
+              <div class="position-relative text-secondary mb-2 text-main">
+                <input type="text" id="profile-id" class="form-control bg-main fs-text ps-7 border text-main" disabled>
+                <i class="bi bi-person position-absolute icon-input tran-y"></i>
+              </div>
+            </div>
+            <div class="col-lg-6">
               <label class="form-label my-2 text-main">First Name : </label>
               <div class="position-relative text-secondary mb-2 text-main">
-                <input type="text" id="fname" class="form-control bg-prime fs-text ps-7 border"
-                  placeholder="Enter your first name" disabled>
+                <input type="text" id="firstname" class="form-control bg-main fs-text ps-7 border text-main" disabled>
                 <i class="bi bi-person position-absolute icon-input tran-y"></i>
               </div>
             </div>
             <div class="col-lg-6">
               <label class="form-label my-2 text-main">Last Name : </label>
               <div class="position-relative text-secondary mb-2 text-main">
-                <input type="text" id="lname" class="form-control bg-prime fs-text ps-7 border"
-                  placeholder="Enter your first name" disabled>
+                <input type="text" id="lastname" class="form-control bg-main fs-text ps-7 border text-main" disabled>
                 <i class="bi bi-person position-absolute icon-input tran-y"></i>
               </div>
             </div>
             <div class="col-lg-6">
               <label class="form-label my-2 text-main">Email : </label>
               <div class="position-relative text-secondary mb-2 text-main">
-                <input type="email" id="email" class="form-control bg-prime fs-text ps-7 border"
-                  placeholder="Enter your first name" disabled>
+                <input type="email" id="email" class="form-control bg-main fs-text ps-7 border text-main" disabled>
                 <i class="bi bi-envelope position-absolute icon-input tran-y"></i>
               </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 mx-auto">
               <label class="form-label my-2 text-main">Register at : </label>
               <div class="position-relative text-secondary mb-2 text-main">
-                <input type="email" id="registerAt" class="form-control bg-prime fs-text ps-7 border"
-                  placeholder="Enter your first name" disabled>
+                <input type="text" id="registered-at" class="form-control bg-main fs-text ps-7 border text-main" disabled>
                 <i class="bi bi-calendar3 position-absolute icon-input tran-y"></i>
-              </div>
-            </div>
-            <div class="col-lg-6 mx-auto">
-              <label class="form-label my-2 text-main">Username : </label>
-              <div class="position-relative text-secondary mb-2 text-main">
-                <input type="email" id="username" class="form-control bg-prime fs-text ps-7 border"
-                  placeholder="Enter your first name" disabled>
-                <i class="bi bi-person position-absolute icon-input tran-y"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </main>
-
-
   <script src="../assets/bootstrap-5.3.7/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/index.js"></script>
   <script src="../assets/js/baseUrl.js"></script>
   <script src="../assets/js/Myprofile.js"></script>
   <script src="../assets/js/getProfile.js"></script>
+  <script src="../assets/js/editProfile.js"></script>
   <script src="../assets/js/logout.js"></script>
 
 </body>
