@@ -82,9 +82,9 @@ iconEye.addEventListener("click", () => {
 });
 
 function showToast(msg) {
-  const toast = document.querySelector(".my-toast");
-  toast.innerHTML = `<i class="bi bi-exclamation-circle-fill me-2 fs-5"></i> ${msg}`;
-  toast.classList.add("show");
+  const toastError = document.querySelector(".my-toast-error");
+  toastError.innerHTML = `<i class="bi bi-exclamation-circle-fill me-2 fs-5"></i> ${msg}`;
+  toastError.classList.add("show");
 
-  setTimeout(() => toast.classList.remove("show"), 3000);
+  setTimeout(() => toastError.classList.remove("show"), 3000);
 }
