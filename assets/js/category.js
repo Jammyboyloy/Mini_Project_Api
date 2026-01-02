@@ -14,7 +14,7 @@ function escapeRegex(text) {
 function loadCategories(page = 1, search = "") {
   currentPage = page;
   fetch(
-    `http://blogs.csm.linkpc.net/api/v1/categories?_page=${page}&_per_page=${perPage}&sortBy=name&sortDir=ASC&search=${search}`
+    `${baseUrl}/categories?_page=${page}&_per_page=${perPage}&sortBy=name&sortDir=ASC&search=${search}`
   )
     .then((res) => res.json())
     .then((res) => {
@@ -142,7 +142,6 @@ function createPagination(meta) {
 searchInput.addEventListener("input", () => {
   loadCategories(1, searchInput.value);
 });
-loadCategories();
 
 searchInput.addEventListener("focus", () => {
   searchInput.classList.add("focused");
@@ -151,3 +150,32 @@ searchInput.addEventListener("focus", () => {
 searchInput.addEventListener("blur", () => {
   searchInput.classList.remove("focused");
 });
+
+// delete
+
+document.querySelector("#deleteCategory").onclick = () =>{
+ deleteCategory(id)
+}
+
+function deleteCategory (id){
+ fetch(`${baseUrl}/categories/${id}`,{
+  method : "DELETE",
+  headers :{
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + localStorage.getItem("token")
+  }
+ })
+ .then(res => res.json())
+ .then(res =>{
+   console.log(res.data.id);
+   
+ })
+ 
+}
+
+
+
+
+
+
+loadCategories();
