@@ -53,18 +53,18 @@ function loadCategories(page = 1, search = "") {
               <td class="py-3 ps-4 fw-medium">${categoryName}</td>
               <td class="py-3 pe-4 text-end">
                 <button
-                  class="btn btn-sm nav-text me-1"
+                  class="btn btn-sm nav-text me-3"
                   data-bs-toggle="modal"
                   data-bs-target="#categoryEdit"
                   onclick="openEditModal('${data.id}', '${data.name}')">
-                  <i class="bi bi-pencil-square"></i>
+                  <i class="bi bi-pencil-square fs-5"></i>
                 </button>
                 <button
-                  class="btn btn-sm nav-text"
+                  class="btn btn-sm nav-text p-0"
                   onclick="openDeleteModal('${data.id}','${data.name}')"
                   data-bs-toggle="modal"
                   data-bs-target="#categoryDelete">
-                  <i class="bi bi-trash3"></i>
+                  <i class="bi bi-trash3 fs-5"></i>
                 </button>
               </td>
             </tr>
@@ -183,6 +183,7 @@ function setCreateError(isError) {
 }
 document.getElementById("createCategory").addEventListener("show.bs.modal" , ()=>{
   document.getElementById("createNewCategoryName").value = "";
+   setCreateError(false);
 })
 document.getElementById("createNewCategory").onclick = () => {
   const name = document.getElementById("createNewCategoryName").value.trim();
@@ -270,6 +271,7 @@ function setEditCreateError(isError) {
 }
 let editID = null;
 function openEditModal(id, name) {
+  setEditCreateError(false)
   editID = id;
   document.querySelector("#editCategoryName").value = name;
   bootstrap.Modal.getOrCreateInstance(document.getElementById("categoryEdit")).show();
