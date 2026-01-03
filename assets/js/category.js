@@ -5,9 +5,10 @@ let showPage = document.querySelector("#showingPage");
 let pagination = document.querySelector("#pagination");
 let searchInput = document.querySelector("#searchCategory");
 let btnDelete = document.querySelector("#deleteCategory");
-let btnEdit = document.querySelector("#editCategory");
+const btnEdit = document.getElementById("editCategory");
 let showNameDelete = document.querySelector("#showNamedelete");
 let erorrCategory = document.querySelector("#erorrCategory")
+let errorEditCategory = document.querySelector("#errorEditCategory")
 function escapeRegex(text) {
   return text.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 }
@@ -214,15 +215,11 @@ document.getElementById("createNewCategory").onclick = () => {
       showError("Something went wrong. Please try again.");
     });
 };
-document
-  .getElementById("createNewCategoryName")
-  .addEventListener("focus", () => {
+document.getElementById("createNewCategoryName").addEventListener("focus", () => {
     erorrCategory.innerHTML = ""
     document.getElementById("createNewCategoryName").classList.add("focused");
   });
-document
-  .getElementById("createNewCategoryName")
-  .addEventListener("blur", () => {
+document.getElementById("createNewCategoryName").addEventListener("blur", () => {
     document
       .getElementById("createNewCategoryName")
       .classList.remove("focused");
@@ -265,6 +262,7 @@ let editID = null;
 function openEditModal(id, name) {
   editID = id;
   document.querySelector("#editCategoryName").value = name;
+  bootstrap.Modal.getOrCreateInstance(document.getElementById("categoryEdit")).show();
 }
 btnEdit.onclick = () => {
   const newName = document.querySelector("#editCategoryName").value.trim();
@@ -276,16 +274,15 @@ btnEdit.onclick = () => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`
     },
-    body: JSON.stringify({
-      name: newName,
-    }),
+    body: JSON.stringify({name: newName})
   })
     .then((res) => res.json())
     .then((res) => {
       if (!res.result) {
         showError("Internal server error");
+        errorEditCategory.innerHTML = `Category "${newName}" already exists.`
         return;
       }
       showSuccess("Updated category successful");
@@ -298,9 +295,10 @@ btnEdit.onclick = () => {
 };
 document.querySelector("#editCategoryName").addEventListener("focus", () => {
   document.querySelector("#editCategoryName").classList.add("focused");
+  errorEditCategory.innerHTML = ""
 });
 document.querySelector("#editCategoryName").addEventListener("blur", () => {
-  document.querySelector("#editCategoryName").remove("focused");
+  document.querySelector("#editCategoryName").classList.remove("focused");
 });
 
 // show toast
