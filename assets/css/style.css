@@ -258,3 +258,12 @@ table td {
     margin-top: 57px;
   }
 }
+/* ---------- allArticles---------*/
+.a-add-color{
+  background-color: #e62b3ee7;
+}
+.article-modal span{
+  color: red;
+}
+
+/* --------------------------------- */
