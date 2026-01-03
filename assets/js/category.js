@@ -8,7 +8,6 @@ let btnDelete = document.querySelector("#deleteCategory");
 const btnEdit = document.getElementById("editCategory");
 let showNameDelete = document.querySelector("#showNamedelete");
 let erorrCategory = document.querySelector("#erorrCategory")
-let errorEditCategory = document.querySelector("#errorEditCategory")
 function escapeRegex(text) {
   return text.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 }
@@ -175,9 +174,15 @@ searchInput.addEventListener("blur", () => {
 });
 
 // create category
+function setCreateError(isError) {
+  if (isError) {
+   document.getElementById("createNewCategoryName").classList.add("rq");
+  } else {
+    document.getElementById("createNewCategoryName").classList.remove("rq");
+  }
+}
 document.getElementById("createCategory").addEventListener("show.bs.modal" , ()=>{
   document.getElementById("createNewCategoryName").value = "";
-  erorrCategory.innerHTML = "";
 })
 document.getElementById("createNewCategory").onclick = () => {
   const name = document.getElementById("createNewCategoryName").value.trim();
@@ -197,8 +202,8 @@ document.getElementById("createNewCategory").onclick = () => {
     .then((res) => res.json())
     .then((res) => {
       if (!res.result) {
-        showError("Failed to create category");
-        erorrCategory.innerHTML = `Category "${name}" already exists.`
+        setCreateError(true)
+        showError(`Category "${name}" already exists.`);
         return;
       }
       showSuccess("Category created successfully!");
@@ -216,13 +221,11 @@ document.getElementById("createNewCategory").onclick = () => {
     });
 };
 document.getElementById("createNewCategoryName").addEventListener("focus", () => {
-    erorrCategory.innerHTML = ""
+    setCreateError(false)
     document.getElementById("createNewCategoryName").classList.add("focused");
   });
 document.getElementById("createNewCategoryName").addEventListener("blur", () => {
-    document
-      .getElementById("createNewCategoryName")
-      .classList.remove("focused");
+    document.getElementById("createNewCategoryName").classList.remove("focused");
   });
 
 // delete
@@ -258,6 +261,13 @@ btnDelete.onclick = () => {
 };
 
 //edit catefory
+function setEditCreateError(isError) {
+  if (isError) {
+   document.querySelector("#editCategoryName").classList.add("rq");
+  } else {
+    document.querySelector("#editCategoryName").classList.remove("rq");
+  }
+}
 let editID = null;
 function openEditModal(id, name) {
   editID = id;
@@ -281,8 +291,8 @@ btnEdit.onclick = () => {
     .then((res) => res.json())
     .then((res) => {
       if (!res.result) {
-        showError("Internal server error");
-        errorEditCategory.innerHTML = `Category "${newName}" already exists.`
+        setEditCreateError(true);
+        showError(`Category "${newName}" already exists.`);
         return;
       }
       showSuccess("Updated category successful");
@@ -294,8 +304,8 @@ btnEdit.onclick = () => {
     });
 };
 document.querySelector("#editCategoryName").addEventListener("focus", () => {
+  setEditCreateError(false);
   document.querySelector("#editCategoryName").classList.add("focused");
-  errorEditCategory.innerHTML = ""
 });
 document.querySelector("#editCategoryName").addEventListener("blur", () => {
   document.querySelector("#editCategoryName").classList.remove("focused");
