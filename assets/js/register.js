@@ -79,6 +79,14 @@ form.addEventListener("submit", (event) => {
         }
       } else {
         console.log("Registration successful:", data);
+
+        sessionStorage.setItem("isRegister", "true");
+        sessionStorage.setItem(
+          "toastMsg",
+          "Register successful Please login."
+        );
+
+        location.href = "../index.html";
       }
     });
 });
@@ -99,7 +107,7 @@ check.forEach((input, index) => {
   });
 
   input.addEventListener("input", () => {
-    if (input.value === "") {
+    if (input.value === "" || input.value !== "") {
       input.classList.remove("rq");
       p[index].innerHTML = "";
     }
@@ -150,7 +158,7 @@ password.addEventListener("input", () => {
     p[4].innerHTML = "";
   }
 
-  prevPassword = password.value; 
+  prevPassword = password.value;
 });
 
 password.addEventListener("blur", () => {

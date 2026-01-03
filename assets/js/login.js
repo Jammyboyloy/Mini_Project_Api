@@ -13,7 +13,7 @@ form.addEventListener("submit", (event) => {
   password.value === ""
     ? password.classList.add("rq")
     : password.classList.remove("rq");
-    
+
   fetch(baseUrl + "/auth/login", {
     method: "POST",
     headers: {
@@ -30,7 +30,12 @@ form.addEventListener("submit", (event) => {
         localStorage.setItem("token", data.data.token);
         location.href = "Article/dashboard.html";
       }
-      if(data.email !== email.value && data.password !== password.value && email.value !== "" && password.value !== ""){
+      if (
+        data.email !== email.value &&
+        data.password !== password.value &&
+        email.value !== "" &&
+        password.value !== ""
+      ) {
         showToast("Invalid email or password.");
       }
     });
@@ -70,8 +75,8 @@ password.addEventListener("blur", () => {
 });
 
 password.addEventListener("input", () => {
-    password.classList.remove("rq");
-    p[1].innerHTML = "";
+  password.classList.remove("rq");
+  p[1].innerHTML = "";
 });
 
 const iconEye = document.querySelector(".icon-eye");
@@ -86,5 +91,23 @@ function showToast(msg) {
   toastError.innerHTML = `<i class="bi bi-exclamation-circle-fill me-2 fs-5"></i> ${msg}`;
   toastError.classList.add("show");
 
-  setTimeout(() => toastError.classList.remove("show"), 3000);
+  setTimeout(() => toastError.classList.remove("show"), 4000);
+
+  const toastSuccess = document.querySelector(".my-toast-success");
+  let isRegister = sessionStorage.getItem("isRegister");
+  let toastMsg = sessionStorage.getItem("toastMsg");
+  if (isRegister) {
+    toastSuccess.innerHTML = `<i class="bi bi-check-circle-fill me-2 fs-5"></i> ${toastMsg}`;
+    toastSuccess.classList.add("show");
+    sessionStorage.removeItem("isRegister");
+    sessionStorage.removeItem("toastMsg");
+  }
+
+  setTimeout(() => toastSuccess.classList.remove("show"), 4000);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (sessionStorage.getItem("isRegister")) {
+    showToast(""); 
+  }
+});
