@@ -14,7 +14,7 @@ function escapeRegex(text) {
 function loadCategories(page = 1, search = "") {
   currentPage = page;
   fetch(
-    `${baseUrl}/categories?_page=${page}&_per_page=${perPage}&sortBy=name&sortDir=ASC&search=${search}`
+    `${baseUrl}/categories?_page=${page}&_per_page=${perPage}&sortBy=createdAt&sortDir=DESC&search=${search}`
   )
     .then((res) => res.json())
     .then((res) => {
@@ -25,9 +25,12 @@ function loadCategories(page = 1, search = "") {
         setSearchError(true);
         row = `
           <tr>
-            <td colspan="2" class="text-center py-5">
-              <img src="../assets/image/notFoundCategory.png" alt="No results found" style="width:400px; margin-bottom:10px;">
-              <div class="text-secondary">No categories found</div>
+            <td colspan="2" class="text-center pb-4">
+               <!-- Lottie Animation -->
+              <dotlottie-wc src="../assets/image/Error 404.json" style="height: 350px" loop autoplay speed="1"
+                mode="forward">
+              </dotlottie-wc>
+              <h5 class="text-secondary">No categories found</h5>
             </td>
           </tr>
         `;
@@ -40,13 +43,13 @@ function loadCategories(page = 1, search = "") {
             const regex = new RegExp(`(${searchTerm})`, "gi"); // global + case-insensitive
             categoryName = categoryName.replace(
               regex,
-              '<span style="color: red; font-weight: bold;">$1</span>'
+              '<span class="text-danger fw-semibold">$1</span>'
             );
           }
 
           row += `
             <tr class="align-middle">
-              <td class="py-3 ps-4">${categoryName}</td>
+              <td class="py-3 ps-4 fw-medium">${categoryName}</td>
               <td class="py-3 pe-4 text-end">
                 <button
                   class="btn btn-sm nav-text me-1"

@@ -10,11 +10,15 @@ body {
   --bg-secondary: #f9fafb;
   --text-color: #364153;
   --hover-color: whitesmoke;
-  --text-primary: oklch(0.546 0.245 262.881);
+  --text-primary: #4f46e5;
   --text-secondary: oklch(0.446 0.03 256.802);
   --nav-text: oklch(0.373 0.034 259.733);
   --border-color: #e5e7eb;
   --bg-btn: #4f46e5;
+   --page-disabled-bg: #f1f3f5;
+  --page-disabled-text: #adb5bd;
+  --page-disabled-border: #dee2e6;
+  
 }
 
 .dark-mode {
@@ -23,10 +27,13 @@ body {
   --bg-secondary: #101828;
   --text-color: #fff;
   --hover-color: #364153;
-  --text-primary: oklch(0.707 0.165 254.624);
+  --text-primary: #4f46e5;
   --text-secondary: oklch(0.707 0.022 261.325);
   --nav-text: oklch(0.872 0.01 258.338);
   --border-color: #364153;
+  --page-disabled-bg: #2b3035;
+  --page-disabled-text: #6c757d;
+  --page-disabled-border: #343a40;
 }
 
 .bg-main {
@@ -172,6 +179,7 @@ nav-item {
   font-size: 18px;
   cursor: pointer;
 }
+
 
 table th {
   background-color: var(--bg-main) !important;
