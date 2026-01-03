@@ -113,39 +113,45 @@ Description.addEventListener("blur", () => {
   Description.classList.remove("focused");
 });
 
-/* ================= FORM VALIDATION ================= */  
+/* ================= FORM VALIDATION ================= */
 function validateForm() {
   errorTitle.textContent = title.value === "" ? "Title is required" : "";
-  errorCategory.textContent = category.value === "" ? "Category is required" : "";
-  errorThumbnail.textContent = thumbnail.value === "" ? "Thumbnail is required" : "";
-  errorDescription.textContent = quill.getText().trim() === "" ? "Description is required" : "";
+  errorCategory.textContent =
+    category.value === "" ? "Category is required" : "";
+  errorThumbnail.textContent =
+    thumbnail.value === "" ? "Thumbnail is required" : "";
+  errorDescription.textContent =
+    quill.getText().trim() === "" ? "Description is required" : "";
 
-  if(title.value === ""){
+  if (title.value === "") {
     title.classList.add("rq");
   }
-  if(category.value === ""){
+  if (category.value === "") {
     category.classList.add("rq");
   }
-  if (thumbnail.value === ""){
+  if (thumbnail.value === "") {
     thumbnail.classList.add("rq");
   }
-  if (quill.getText().trim() === ""){
+  if (quill.getText().trim() === "") {
     Description.classList.add("rq");
   }
 
-
-  if (title.value === "" || category.value === "" || quill.getText().trim() === "") {
-    return false; 
+  if (
+    title.value === "" ||
+    category.value === "" ||
+    quill.getText().trim() === ""
+  ) {
+    return false;
   }
   return true;
 }
 
 // Remove error messages when user types or changes value
 title.addEventListener("keyup", () => {
-  if (title.value.trim() !== ""){
+  if (title.value.trim() !== "") {
     title.classList.remove("rq");
     errorTitle.textContent = "";
-  } 
+  }
 });
 category.addEventListener("change", () => {
   if (category.value !== "") {
@@ -156,7 +162,8 @@ category.addEventListener("change", () => {
 thumbnail.addEventListener("change", () => {
   if (thumbnail.value !== "") {
     thumbnail.classList.remove("rq");
-    errorThumbnail.textContent = "";}
+    errorThumbnail.textContent = "";
+  }
 });
 Description.addEventListener("keyup", () => {
   if (quill.getText().trim() !== "") {
@@ -165,52 +172,54 @@ Description.addEventListener("keyup", () => {
   }
 });
 /* ================= SUBMIT FORM ================= */
-inputForm.addEventListener("submit", async (e) => {
+inputForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-validateForm();
-if (!validateForm()) {
+  if (!validateForm()) {
     return;
   }
-  try {
-    let res = await fetch(`${baseUrl}/articles`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: title.value,
-        content: quill.root.innerHTML,
-        categoryId: Number(category.value),
-      }),
-    });
-    let article = await res.json();
-    /* UPLOAD THUMBNAIL */
-    let formData = new FormData();
-    formData.append("thumbnail", thumbnail.files[0]);
+  fetch(`${baseUrl}/articles`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title: title.value,
+      content: quill.root.innerHTML,
+      categoryId: Number(category.value),
+    }),
+  })
+    .then((res) => res.json())
+    .then((article) => {
+      /* UPLOAD THUMBNAIL */
+      const formData = new FormData();
+      formData.append("thumbnail", thumbnail.files[0]);
 
-    await fetch(`${baseUrl}/articles/${article.data.id}/thumbnail`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
+      return fetch(`${baseUrl}/articles/${article.data.id}/thumbnail`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      showToast(res.message || "Article created successfully!");
+      inputForm.reset();
+      quill.setText("");
+    })
+    .catch((err) => {
+      console.error(err);
+      showToast("Error creating article. Please try again.");
     });
-    showToast("Article created successfully!");
-    inputForm.reset();
-    quill.setText("");
-  } catch (err) {
-    console.error(err);
-    showToast("Error creating article. Please try again.");
-  }
 });
 
 /* ================= TOAST NOTIFICATION ================= */
 function showToast(msg) {
-  const toast = document.querySelector(".my-toast");
-  toast.innerHTML = `<i class="bi bi-exclamation-circle-fill me-2 fs-5 border-success"></i> ${msg}`;
-  toast.classList.add("show");
-
-  setTimeout(() => toast.classList.remove("show"), 3000);
+  const toastError = document.querySelector(".my-toast-success");
+  toastError.innerHTML = `<i class="bi bi-exclamation-circle-fill me-2 fs-5"></i> ${msg}`;
+  toastError.classList.add("show");
+  setTimeout(() => toastError.classList.remove("show"), 4000);
 }
