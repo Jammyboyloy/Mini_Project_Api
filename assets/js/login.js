@@ -28,16 +28,13 @@ form.addEventListener("submit", (event) => {
     .then((data) => {
       if (data.result === true) {
         localStorage.setItem("token", data.data.token);
+        sessionStorage.setItem("isLogin", "true");
         location.href = "Article/dashboard.html";
-      }
-      if (
-        data.email !== email.value &&
-        data.password !== password.value &&
-        email.value !== "" &&
-        password.value !== ""
-      ) {
+      } else{
         showToast("Invalid email or password.");
       }
+      
+      
     });
 });
 

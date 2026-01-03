@@ -116,5 +116,23 @@ function formatDate(isoString) {
   });
 }
 
+function showToast(msg) {
+
+  const toastSuccess = document.querySelector(".my-toast-success");
+  let isLogin = sessionStorage.getItem("isLogin");
+  if (isLogin) {
+    toastSuccess.innerHTML = `<i class="bi bi-check-circle-fill me-2 fs-5"></i> ${msg}`;
+    toastSuccess.classList.add("show");
+    sessionStorage.removeItem("isLogin");
+  }
+
+  setTimeout(() => toastSuccess.classList.remove("show"), 4000);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (sessionStorage.getItem("isLogin")) {
+    showToast("You’re logged in successfully."); 
+  }
+});
 
 
