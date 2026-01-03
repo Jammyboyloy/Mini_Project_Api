@@ -15,11 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (avatar) {
         avatar.src = user.avatar ?? "default.png";
       }
-      document.getElementById("profile-id").value = user.id ?? "";
-      document.getElementById("firstname").value = user.firstName ?? "";
-      document.getElementById("lastname").value = user.lastName ?? "";
-      document.getElementById("email").value = user.email ?? "";
-      document.getElementById("registered-at").value = user.registeredAt ?? "";
+      document.getElementById("profile-id").value = user.id;
+      document.getElementById("firstname").value = user.firstName;
+      document.getElementById("lastname").value = user.lastName;
+      document.getElementById("email").value = user.email;
+      document.getElementById("registered-at").value = user.registeredAt;
     })
 });
 
