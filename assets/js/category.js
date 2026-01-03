@@ -5,8 +5,8 @@ let showPage = document.querySelector("#showingPage");
 let pagination = document.querySelector("#pagination");
 let searchInput = document.querySelector("#searchCategory");
 let btnDelete = document.querySelector("#deleteCategory");
-let btnEdit = document.querySelector("#editCategory")
-
+let btnEdit = document.querySelector("#editCategory");
+let showNameDelete = document.querySelector("#showNamedelete");
 function escapeRegex(text) {
   return text.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 }
@@ -21,8 +21,8 @@ function loadCategories(page = 1, search = "") {
       const item = res.data.items;
       const meta = res.data.meta;
       let row = "";
-
       if (item.length === 0) {
+        setSearchError(true);
         row = `
           <tr>
             <td colspan="2" class="text-center py-5">
@@ -32,6 +32,7 @@ function loadCategories(page = 1, search = "") {
           </tr>
         `;
       } else {
+        setSearchError(false);
         item.forEach((data) => {
           let categoryName = data.name;
           if (search.trim() !== "") {
@@ -56,7 +57,7 @@ function loadCategories(page = 1, search = "") {
                 </button>
                 <button
                   class="btn btn-sm nav-text"
-                  onclick="openDeleteModal('${data.id}')"
+                  onclick="openDeleteModal('${data.id}','${data.name}')"
                   data-bs-toggle="modal"
                   data-bs-target="#categoryDelete">
                   <i class="bi bi-trash3"></i>
@@ -86,67 +87,77 @@ function loadCategories(page = 1, search = "") {
 function createPagination(meta) {
   const total = meta.totalPages;
   const current = meta.currentPage;
-  const htmlArray = [];
-  htmlArray.push(`
-    <li class="${!meta.hasPreviousPage ? "disabled" : ""}">
-      <a class="page-link page-pill" href="#" aria-label="Previous"
+  let html = "";
+
+  // Previous
+  html += `
+    <li class="page-item ${!meta.hasPreviousPage ? "disabled" : ""}">
+      <a class="page-link" href="#"
          onclick="event.preventDefault(); loadCategories(${current - 1}, '${
     searchInput.value
   }')">
-        <i class="bi bi-arrow-left-circle"></i>
+        <i class="bi bi-chevron-left"></i>
       </a>
     </li>
-  `);
+  `;
 
   const pages = [];
-
   pages.push(1);
 
   if (current > 3) pages.push("...");
   for (let i = current - 1; i <= current + 1; i++) {
     if (i > 1 && i < total) pages.push(i);
   }
-
   if (current < total - 2) pages.push("...");
   if (total > 1) pages.push(total);
 
   pages.forEach((p) => {
     if (p === "...") {
-      htmlArray.push(`
+      html += `
         <li class="page-item disabled">
-          <span class="page-link page-pill">…</span>
+          <span class="page-link">...</span>
         </li>
-      `);
+      `;
     } else {
-      htmlArray.push(`
+      html += `
         <li class="page-item ${p === current ? "active" : ""}">
-          <a class="page-link page-pill ${p === current ? "active-pill" : ""}" 
-             href="#" onclick="event.preventDefault(); loadCategories(${p}, '${
+          <a class="page-link"
+             href="#"
+             onclick="event.preventDefault(); loadCategories(${p}, '${
         searchInput.value
       }')">
             ${p}
           </a>
         </li>
-      `);
+      `;
     }
   });
 
-  htmlArray.push(`
-    <li class="${!meta.hasNextPage ? "disabled" : ""}">
-      <a class="page-link page-pill" href="#" aria-label="Next"
+  // Next
+  html += `
+    <li class="page-item ${!meta.hasNextPage ? "disabled" : ""}">
+      <a class="page-link" href="#"
          onclick="event.preventDefault(); loadCategories(${current + 1}, '${
     searchInput.value
   }')">
-        <i class="bi bi-arrow-right-circle"></i>
+        <i class="bi bi-chevron-right "></i>
       </a>
     </li>
-  `);
+  `;
 
-  pagination.innerHTML = htmlArray.join("");
+  pagination.innerHTML = html;
 }
 
 // search category
+function setSearchError(isError) {
+  if (isError) {
+    searchInput.classList.add("rq");
+  } else {
+    searchInput.classList.remove("rq");
+  }
+}
 searchInput.addEventListener("input", () => {
+  setSearchError(false);
   loadCategories(1, searchInput.value);
 });
 
@@ -161,7 +172,6 @@ searchInput.addEventListener("blur", () => {
 // create category
 document.getElementById("createNewCategory").onclick = () => {
   const name = document.getElementById("createNewCategoryName").value.trim();
-
   if (!name) {
     showError("Category name cannot be empty");
     return;
@@ -171,93 +181,117 @@ document.getElementById("createNewCategory").onclick = () => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ name: name })
+    body: JSON.stringify({ name: name }),
   })
-  .then(res => res.json())
-  .then(res => {
-    if (!res.result) {
-      showError("Failed to create category");
-      return;
-    }
-    showSuccess("Category created successfully!");
+    .then((res) => res.json())
+    .then((res) => {
+      if (!res.result) {
+        showError("Failed to create category");
+        return;
+      }
+      showSuccess("Category created successfully!");
+      bootstrap.Modal.getInstance(
+        document.getElementById("createCategory")
+      ).hide();
 
-    bootstrap.Modal.getInstance(document.getElementById("createCategory")).hide();
+      document.getElementById("createNewCategoryName").value = "";
 
-    document.getElementById("createNewCategoryName").value = "";
-
-    loadCategories(currentPage, searchInput.value);
-  })
-  .catch(err => {
-    console.error(err);
-    showError("Something went wrong. Please try again.");
-  });
+      loadCategories(currentPage, searchInput.value);
+    })
+    .catch((err) => {
+      console.error(err);
+      showError("Something went wrong. Please try again.");
+    });
 };
-
+document
+  .getElementById("createNewCategoryName")
+  .addEventListener("focus", () => {
+    document.getElementById("createNewCategoryName").classList.add("focused");
+  });
+document
+  .getElementById("createNewCategoryName")
+  .addEventListener("blur", () => {
+    document
+      .getElementById("createNewCategoryName")
+      .classList.remove("focused");
+  });
 
 // delete
 let deleteID = null;
-
-function openDeleteModal(id) {
+let deleteName = null;
+function openDeleteModal(id, name) {
   deleteID = id;
+  deleteName = name;
+  document.getElementById("showNamedelete").textContent = `"${name}"`;
 }
 btnDelete.onclick = () => {
-  if (!deleteID) return;
+  if (!deleteID) {
+    showError("Category not found.");
+  }
 
   fetch(`${baseUrl}/categories/${deleteID}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
-    }
+      Authorization: `Bearer ${token}`,
+    },
   })
     .then((res) => res.json())
     .then(() => {
       bootstrap.Modal.getInstance(
         document.getElementById("categoryDelete")
       ).hide();
-      showSuccess("Category Delete successfully!");
+      showSuccess(`Removed category "${deleteName}" successful.`);
       loadCategories(currentPage, searchInput.value);
       deleteID = null;
+      deleteName = null;
     });
 };
-
 
 //edit catefory
 let editID = null;
 function openEditModal(id, name) {
-  editID = id; 
+  editID = id;
   document.querySelector("#editCategoryName").value = name;
 }
-btnEdit.onclick = () =>{
+btnEdit.onclick = () => {
   const newName = document.querySelector("#editCategoryName").value.trim();
-  if(!newName){
-    showError("Category name cannot be empty");
+  if (!newName) {
+    showError("Category not found.");
     return;
   }
-  fetch(`${baseUrl}/categories/${editID}`,{
-    method : "PUT",
+  fetch(`${baseUrl}/categories/${editID}`, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
-    body : JSON.stringify({
-      name : newName
-    })
+    body: JSON.stringify({
+      name: newName,
+    }),
   })
-  .then(res =>res.json())
-  .then(res =>{
-    if (!res.result){
-      showError("Update failed");
-      return;
-    }
-    showSuccess("Category updated successfully!");
-    bootstrap.Modal.getInstance(document.getElementById("categoryEdit")).hide();
-    loadCategories(currentPage, searchInput.value);
-    editID = null;
-  })
-}
+    .then((res) => res.json())
+    .then((res) => {
+      if (!res.result) {
+        showError("Internal server error");
+        return;
+      }
+      showSuccess("Updated category successful");
+      bootstrap.Modal.getInstance(
+        document.getElementById("categoryEdit")
+      ).hide();
+      loadCategories(currentPage, searchInput.value);
+      editID = null;
+    });
+};
+document.querySelector("#editCategoryName").addEventListener("focus", () => {
+  document.querySelector("#editCategoryName").classList.add("focused");
+});
+document.querySelector("#editCategoryName").addEventListener("blur", () => {
+  document.querySelector("#editCategoryName").remove("focused");
+});
 
 // show toast
 function showError(msg) {
@@ -265,7 +299,7 @@ function showError(msg) {
   toastError.innerHTML = `<i class="bi bi-exclamation-circle-fill me-2 fs-5"></i> ${msg}`;
   toastError.classList.add("show");
 
-  setTimeout(() => toastError.classList.remove("show"), 3000);
+  setTimeout(() => toastError.classList.remove("show"), 4000);
 }
 
 function showSuccess(msg) {
@@ -273,9 +307,7 @@ function showSuccess(msg) {
   toastSuccess.innerHTML = `<i class="bi bi-check-circle-fill me-2 fs-5"></i> ${msg}`;
   toastSuccess.classList.add("show");
 
-  setTimeout(() => toastSuccess.classList.remove("show"), 3000);
+  setTimeout(() => toastSuccess.classList.remove("show"), 4000);
 }
-
-
 
 loadCategories();
