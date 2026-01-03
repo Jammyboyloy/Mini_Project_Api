@@ -1,3 +1,19 @@
+let btnLogout2 = document.querySelector("#btnLogout2");
+btnLogout2.addEventListener("click", () => {
+  fetch(baseUrl + "/auth/logout", {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((item) => {
+      if (item.result) {
+        localStorage.removeItem("token");
+        location.href = "../index.html";
+      }
+    });
+});
 document.addEventListener("DOMContentLoaded", () => {
   const GET_PROFILE_URL = `${baseUrl}/auth/profile`;
   const UPDATE_PROFILE_URL = `${baseUrl}/profile`;
