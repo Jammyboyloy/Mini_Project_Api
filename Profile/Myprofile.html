@@ -176,7 +176,7 @@
               </div>
             </div>
             <div class="card-body py-2">
-              <h6 class="text-main text-center mb-3">@Your Name</h6>
+              <!-- <h6 class="text-main text-center mb-3">@Your Name</h6> -->
               <div class="d-flex justify-content-center gap-3">
                 <button class="btn btn-danger px-4" type="button" data-bs-toggle="modal"
                   data-bs-target="#exampleModal2">Log out</button>
@@ -207,6 +207,7 @@
                                 <input type="text" id="fname" class="form-control bg-main fs-text ps-7 border text-main">
                                 <i class="bi bi-person position-absolute icon-input tran-y"></i>
                               </div>
+                              <p class="mes text-danger"></p>
                             </div>
                             <div class="col-12">
                               <label class="form-label my-2 text-main">Last Name : </label>
@@ -214,6 +215,7 @@
                                 <input type="text" id="lname" class="form-control bg-main fs-text ps-7 border text-main">
                                 <i class="bi bi-person position-absolute icon-input tran-y"></i>
                               </div>
+                              <p class="mes text-danger"></p>
                             </div>
                             <div class="col-12">
                               <label class="form-label my-2 text-main">Email : </label>
@@ -221,6 +223,7 @@
                                 <input type="email" id="email1" class="form-control bg-main fs-text ps-7 border text-main">
                                 <i class="bi bi-envelope position-absolute icon-input tran-y"></i>
                               </div>
+                              <p class="mes text-danger"></p>
                             </div>
                           </div>
                         </div>
@@ -279,6 +282,8 @@
         </div>
       </div>
     </div>
+    <div class="my-toast-success alert alert-success text-success p-3 fs-6 rounded-3" id="success"></div>
+    <div class="my-toast-error alert alert-danger text-danger p-3 fs-6 rounded-3" id="error"></div>
   </main>
   <script src="../assets/bootstrap-5.3.7/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/index.js"></script>
