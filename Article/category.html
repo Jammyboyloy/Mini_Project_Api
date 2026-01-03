@@ -13,6 +13,42 @@
           .searchCategory::placeholder {
                color: var(--text-secondary);
           }
+
+          .pagination {
+               gap: 8px;
+          }
+
+          .page-link {
+               width: 44px;
+               height: 44px;
+               border-radius: 8px;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               border: 1.5px solid #e5e7eb;
+               background: #fff;
+               color: #111827;
+               font-weight: 500;
+               transition: all 0.2s ease;
+          }
+
+          .page-item.active .page-link {
+               border-color: 3px or 4px solid var(—bg-btn);
+               color: #4f46e5;
+               background: #fff;
+               font-weight: 600;
+          }
+
+          .page-item.disabled .page-link {
+               background: #e5e7eb;
+               border-color: #e5e7eb;
+               color: #9ca3af;
+               pointer-events: none;
+          }
+
+          .page-link i {
+               font-size: 18px;
+          }
      </style>
 </head>
 
@@ -232,7 +268,8 @@
                <div class="modal-content rounded-3 bg-main">
                     <div class="modal-body text-center">
                          <h5 class="text-danger fw-medium mb-3">Delete Categories</h5>
-                         <p class="text-secondary">Are you sure you want to delete Categories?</p>
+                         <p class="text-secondary">Are you sure you want to delete Categories <span id="showNamedelete"
+                                   class="text-danger"></span>?</p>
                          <button class="btn btn-outline-secondary px-5 py-2" data-bs-dismiss="modal">Cancel</button>
                          <button class="btn btn-danger ms-2 px-5 py-2" id="deleteCategory">Delete</button>
                     </div>
