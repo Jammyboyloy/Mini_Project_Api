@@ -81,10 +81,7 @@ form.addEventListener("submit", (event) => {
         console.log("Registration successful:", data);
 
         sessionStorage.setItem("isRegister", "true");
-        sessionStorage.setItem(
-          "toastMsg",
-          "Register successful Please login."
-        );
+        sessionStorage.setItem("toastMsg", "Register successful Please login.");
 
         location.href = "../index.html";
       }
@@ -99,11 +96,14 @@ inputs.forEach((input) => {
 
 check.forEach((input, index) => {
   input.addEventListener("blur", () => {
-    if (/^\d/.test(input.value)) {
+    if (input.value === "") {
+      p[index].innerHTML = "";
+      input.classList.remove("rq");
+      input.classList.remove("focused");
+    } else if (/^\d/.test(input.value)) {
       p[index].innerHTML = "Cannot start with a number";
       input.classList.add("rq");
     }
-    input.classList.remove("focused");
   });
 
   input.addEventListener("input", () => {
@@ -122,20 +122,17 @@ email.addEventListener("input", () => {
 });
 
 email.addEventListener("blur", () => {
-  p[2].innerHTML =
-    email.value === ""
-      ? ""
-      : /^\d/.test(email.value)
-      ? "Cannot start with a number"
-      : email.value.includes("@gmail.com")
-      ? ""
-      : "Please enter a valid email address";
-
-  email.value === ""
-    ? email.classList.remove("focused")
-    : email.value.includes("@gmail.com")
-    ? (email.classList.remove("rq"), email.classList.remove("focused"))
-    : email.classList.add("rq");
+  if (email.value === "") {
+    p[2].innerHTML = "";
+    email.classList.remove("rq");
+    email.classList.remove("focused");
+  } else if (/^\d/.test(email.value)) {
+    p[2].innerHTML = "Cannot start with a number";
+    email.classList.add("rq");
+  } else if (!email.value.includes("@gmail.com")) {
+    p[2].innerHTML = "Please enter a valid email address";
+    email.classList.add("rq");
+  }
 });
 
 let prevPassword = password.value;
@@ -165,6 +162,8 @@ password.addEventListener("blur", () => {
   if (password.value === "") {
     p[3].innerHTML = "";
     password.classList.remove("rq");
+    p[4].innerHTML = "";
+    cpassword.classList.remove("rq");
   } else if (/^\d/.test(password.value)) {
     p[3].innerHTML = "Cannot start with a number";
     password.classList.add("rq");

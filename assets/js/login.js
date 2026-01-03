@@ -6,6 +6,8 @@ const p = document.querySelectorAll("p");
 const formControl = document.querySelector(".form-control");
 
 form.addEventListener("submit", (event) => {
+  email.classList.remove("focused");
+  password.classList.remove("focused");
   event.preventDefault();
   p[0].innerHTML = email.value === "" ? "Email is required" : "";
   p[1].innerHTML = password.value === "" ? "Password is required" : "";
@@ -13,6 +15,11 @@ form.addEventListener("submit", (event) => {
   password.value === ""
     ? password.classList.add("rq")
     : password.classList.remove("rq");
+
+  if (!email.value.includes("@gmail.com")) {
+    email.classList.add("rq");
+    p[0].innerHTML = "Please enter a valid email address";
+  }
 
   fetch(baseUrl + "/auth/login", {
     method: "POST",
@@ -30,11 +37,10 @@ form.addEventListener("submit", (event) => {
         localStorage.setItem("token", data.data.token);
         sessionStorage.setItem("isLogin", "true");
         location.href = "Article/dashboard.html";
-      } else{
-        showToast("Invalid email or password.");
       }
-      
-      
+
+      if (email.value !== "" && password.value !== "" && email.value.includes("@gmail.com"))
+        showToast("Invalid email or password.");
     });
 });
 
@@ -50,17 +56,16 @@ email.addEventListener("input", () => {
 });
 
 email.addEventListener("blur", () => {
-  p[0].innerHTML =
-    email.value === ""
-      ? (p[0].innerHTML = "")
-      : email.value.includes("@gmail.com")
-      ? ""
-      : "Please enter a valid email address";
-  email.value === ""
-    ? email.classList.remove("focused")
-    : email.value.includes("@gmail.com")
-    ? (email.classList.remove("rq"), email.classList.remove("focused"))
-    : email.classList.add("rq");
+ 
+  if(email.value === ""){
+    p[0].innerHTML = "";
+    email.classList.remove("rq");
+    email.classList.remove("focused");
+  }else if(email.value !== "" && !email.value.includes("@gmail.com")){
+    p[0].innerHTML = "Please enter a valid email address";
+    email.classList.add("rq");
+  }
+  
 });
 
 password.addEventListener("focus", () => {
@@ -68,7 +73,11 @@ password.addEventListener("focus", () => {
 });
 
 password.addEventListener("blur", () => {
-  password.classList.remove("focused");
+  if(password.value === ""){
+    password.classList.remove("rq");
+    password.classList.remove("focused");
+    p[1].innerHTML = "";
+  }
 });
 
 password.addEventListener("input", () => {
@@ -105,6 +114,6 @@ function showToast(msg) {
 
 document.addEventListener("DOMContentLoaded", () => {
   if (sessionStorage.getItem("isRegister")) {
-    showToast(""); 
+    showToast("");
   }
 });

@@ -19,8 +19,17 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("firstname").value = user.firstName;
       document.getElementById("lastname").value = user.lastName;
       document.getElementById("email").value = user.email;
-      document.getElementById("registered-at").value = user.registeredAt;
+      document.getElementById("registered-at").value = formatDate(user.registeredAt);
+      document.getElementById("username").value = user.firstName + " " + user.lastName;
+      document.getElementById("usernames").innerHTML = user.firstName + " " + user.lastName;
     })
 });
 
-
+function formatDate(isoString) {
+  const date = new Date(isoString);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  });
+}

@@ -115,6 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
         bootstrap.Modal.getInstance(document.getElementById("exampleModal4")).hide();
         showToast("Profile updated successfully");
       });
+
+      getProfile();
   });
 
   // Toast function
