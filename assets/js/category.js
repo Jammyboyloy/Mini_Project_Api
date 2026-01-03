@@ -7,6 +7,7 @@ let searchInput = document.querySelector("#searchCategory");
 let btnDelete = document.querySelector("#deleteCategory");
 let btnEdit = document.querySelector("#editCategory");
 let showNameDelete = document.querySelector("#showNamedelete");
+let erorrCategory = document.querySelector("#erorrCategory")
 function escapeRegex(text) {
   return text.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 }
@@ -173,6 +174,10 @@ searchInput.addEventListener("blur", () => {
 });
 
 // create category
+document.getElementById("createCategory").addEventListener("show.bs.modal" , ()=>{
+  document.getElementById("createNewCategoryName").value = "";
+  erorrCategory.innerHTML = "";
+})
 document.getElementById("createNewCategory").onclick = () => {
   const name = document.getElementById("createNewCategoryName").value.trim();
   if (!name) {
@@ -192,6 +197,7 @@ document.getElementById("createNewCategory").onclick = () => {
     .then((res) => {
       if (!res.result) {
         showError("Failed to create category");
+        erorrCategory.innerHTML = `Category "${name}" already exists.`
         return;
       }
       showSuccess("Category created successfully!");
@@ -211,6 +217,7 @@ document.getElementById("createNewCategory").onclick = () => {
 document
   .getElementById("createNewCategoryName")
   .addEventListener("focus", () => {
+    erorrCategory.innerHTML = ""
     document.getElementById("createNewCategoryName").classList.add("focused");
   });
 document
