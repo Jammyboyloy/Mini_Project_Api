@@ -55,10 +55,13 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       body: formData,
     })
-      .then((res) => res.json()) 
-      .then(() => {
-        loadProfile();
-      })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.result === true) {
+          loadProfile();
+          showToast("Successful Remove Avatar");
+        }
+      });
   });
   removeBtn.addEventListener("click", function () {
     fetch(AVATAR_URL, {
@@ -68,20 +71,28 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     })
       .then((res) => res.json())
-      .then(() => {
-        avatarImg.src = DEFAULT_AVATAR;
-        loadProfile();
-        const modalEl = document.getElementById("exampleModal3");
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        modal.hide();
-      })
+      .then((res) => {
+        if (res.result === true) {
+          avatarImg.src = DEFAULT_AVATAR;
+          loadProfile();
+          showToast("Successful Remove Avatar");
+        }
+      });
   });
+
   function showToast(msg) {
-  const toastError = document.querySelector("#error");
-  toastError.innerHTML = `<i class="bi bi-exclamation-circle-fill me-2 fs-5"></i> ${msg}`;
-  toastError.classList.add("show");
+    const removeSuccess = document.querySelector("#removeSuccess");
+    removeSuccess.innerHTML = `<i class="bi bi-check-circle-fill me-2 fs-5"></i> ${msg}`;
+    removeSuccess.classList.add("show");
 
-  setTimeout(() => toastError.classList.remove("show"), 3000);
-}
+    setTimeout(() => removeSuccess.classList.remove("show"), 4000);
 
+    const updateProfileSuccess = document.querySelector(
+      "#updateProfileSuccess"
+    );
+    updateProfileSuccess.innerHTML = `<i class="bi bi-check-circle-fill me-2 fs-5"></i> ${msg}`;
+    updateProfileSuccess.classList.add("show");
+
+    setTimeout(() => updateProfileSuccess.classList.remove("show"), 4000);
+  }
 });

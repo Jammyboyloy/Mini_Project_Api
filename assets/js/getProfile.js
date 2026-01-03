@@ -1,5 +1,5 @@
 // Get Profile
-function getProfit(){
+function getProfile(){
   fetch(baseUrl + "/auth/profile", {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -16,4 +16,4 @@ function getProfit(){
     });
 }
 
-getProfit();
+getProfile();
