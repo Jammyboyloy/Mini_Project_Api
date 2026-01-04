@@ -12,9 +12,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
 </head>
 <style>
+  .ql-toolbar.ql-snow {
+    background-color: #f3f3f6;
+    border-color: #374151;
+  }
+
   /* Ensure Quill toolbar is visible */
   .ql-toolbar {
     border-radius: 6px 6px 0 0;
+    background-color: var(--bg-main);
     display: block !important;
   }
 
@@ -42,18 +48,13 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-
     background-color: var(--bg-main, #ffffff);
-    color: var(--text-secondary, #111827);
-
+    color: var(--text-secondary);
     border: 1px solid #ced4da;
     border-radius: 8px;
     padding: 10px 40px 10px 12px;
     font-size: 15px;
     cursor: pointer;
-
-    /* custom arrow */
-    /* background-image: url("data:image/svg+xml;utf8,<svg fill='%236b7280' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>"); */
     background-repeat: no-repeat;
     background-position: right 12px center;
     background-size: 18px;
@@ -76,11 +77,16 @@
     color: #9ca3af;
   }
 
-  /* Dark mode support */
-  body.dark .custom-select {
-    background-color: #111827;
-    color: #e5e7eb;
-    border-color: #374151;
+  #Description .ql-editor.ql-blank::before {
+    font-family: "Poppins", "Noto Sans Khmer", sans-serif;
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .ql-toolbar .ql-stroke {
+      stroke: #ffffff;
+    }
   }
 </style>
 
@@ -210,34 +216,30 @@
             <label class="form-label text-main">Title <span class="text-danger">*</span></label>
             <input type="text" id="Title" class="form-control bg-main dark border mb-2"
               placeholder="Enter article title">
-            <!-- <small id="errorTitle"></small> -->
             <p class="m-0 p-0 fs-6 text-danger" id="errorTitle"></p>
           </div>
 
           <div class="mb-3">
             <label class="form-label text-main">Category <span class="text-danger">*</span></label>
-            <select id="Category" class="form-control bg-main dark custom-select border mb-2"
+            <select id="Category" class="form-control bg-main dark custom-select border mb-2 text-main"
               placeholder="Enter article title">
-              <option value="" selected hidden>-- Select Category --</option>
+              <option value="" disabled selected hidden>-- Select Category --</option>
             </select>
-            <!-- <small id="errorCategory"></small> -->
             <p class="m-0 p-0 fs-6 text-danger" id="errorCategory"></p>
           </div>
 
           <div class="mb-3">
             <label class="form-label text-main">Thumbnail <span class="text-danger">*</span></label>
             <input type="file" id="Thumbnail" class="form-control bg-main dark border mb-2" accept=".jpg,.jpeg,.png">
-            <!-- <small id="errorThumbnail"></small> -->
             <p class="m-0 p-0 fs-6 text-danger" id="errorThumbnail"></p>
           </div>
 
           <div class="mb-3">
             <label class="form-label text-main">Description <span class="text-danger">*</span></label>
             <!-- Quill Editor -->
-            <div id="Description" style="height:200px;" class="bg-main dark"></div>
+            <div id="Description" style="height:200px;" class="bg-main dark text-main"></div>
             <!-- Hidden input for plain text -->
             <input type="hidden" id="DescriptionText" name="DescriptionText">
-            <!-- <small id="errorDescription"></small>2 -->
             <p class="m-0 mt-2 p-0 fs-6 text-danger" id="errorDescription"></p>
           </div>
           <div class="d-flex justify-content-between">
