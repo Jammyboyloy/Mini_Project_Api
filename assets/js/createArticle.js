@@ -20,7 +20,6 @@ let toolbarOptions = [
   [{ color: [] }, { background: [] }],
   ["clean"],
 ];
-
 /* ================= INIT ================= */
 document.addEventListener("DOMContentLoaded", () => {
   quill = new Quill("#Description", {
@@ -43,7 +42,8 @@ function loadCategories() {
   })
     .then((res) => res.json())
     .then((res) => {
-      category.innerHTML = '<option value="">-- Select Category --</option>';
+      category.innerHTML =
+        '<option value="" disabled selected >-- Select Category --</option>';
       let categories = res.data?.items || res.data || res.categories || [];
       categories.forEach((cat) => {
         let option = document.createElement("option");
@@ -64,7 +64,7 @@ thumbnail.addEventListener("change", (e) => {
   if (!validateThumbnail(file)) {
     thumbnail.value = "";
     errorThumbnail.textContent =
-      "Invalid thumbnail. Please select a JPG or PNG image under 2MB.";
+      "Invalid thumbnail. Please select a JPG or PNG image under 1MB.";
     return;
   } else {
     errorThumbnail.textContent = "";
@@ -72,7 +72,7 @@ thumbnail.addEventListener("change", (e) => {
 });
 function validateThumbnail(file) {
   let allowed = ["image/jpeg", "image/png"];
-  let maxSize = 2 * 1024 * 1024;
+  let maxSize = 1024 * 1024;
 
   if (!allowed.includes(file.type)) {
     errorThumbnail.textContent = "Only JPG or PNG images allowed";
@@ -135,7 +135,6 @@ function validateForm() {
   if (quill.getText().trim() === "") {
     Description.classList.add("rq");
   }
-
   if (
     title.value === "" ||
     category.value === "" ||
@@ -146,7 +145,7 @@ function validateForm() {
   return true;
 }
 
-// Remove error messages when user types or changes value
+// Remove error messages 
 title.addEventListener("keyup", () => {
   if (title.value.trim() !== "") {
     title.classList.remove("rq");
@@ -192,7 +191,7 @@ inputForm.addEventListener("submit", (e) => {
   })
     .then((res) => res.json())
     .then((article) => {
-      if(article.result === false){
+      if (article.result === false) {
         showToastError("Error creating article. Please try again.");
         return;
       }
@@ -211,13 +210,14 @@ inputForm.addEventListener("submit", (e) => {
     .then((res) => res.json())
     .then((res) => {
       showToastSuccess("Article created successfully!");
+      // location.href = "../../../Article/allArticle.html";
       inputForm.reset();
       quill.setText("");
-    })
-    // .catch((err) => {
-    //   console.error(err);
-    //   showToast("Error creating article. Please try again.");
-    // });
+    });
+  // .catch((err) => {
+  //   console.error(err);
+  //   showToast("Error creating article. Please try again.");
+  // });
 });
 
 /* ================= TOAST NOTIFICATION ================= */
