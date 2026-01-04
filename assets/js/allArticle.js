@@ -74,7 +74,9 @@ const allArticles = () => {
                         <tr>
                             <td><img style="width: 80px; height: 80px;" class="rounded-3" src="${el.thumbnail}" alt="No image"></td>
                             <td class="text-main h-100 my-auto">${el.title}</td>
-                            <td class="text-main ">${el.category?.name || "null"}</td>
+                            <td class="text-main "><small class="fs-6 bg-primary w-fit h-fit rounded-4 px-3 text-primary ms-auto" style="padding: 2px;">
+                            ${el.category?.name ?? "null"
+              }</small></td>
                             <td class="text-main">${khmerTime}</td>
                             <td class="p-0">               
                                 <button class="btn btn-sm nav-text p-0 ms-3 me-4 border-0" data-bs-toggle="modal" data-bs-target="#articleEdit" onclick="editeArticle(${el.id})">
@@ -154,9 +156,9 @@ const allCategory = ()=> {
 // --cate allcategory
 allCategory();
 
-//-----------------------------
-//       Update Own Articles
-// ---------------------------
+//-----------------------------------------------
+//                      Update Own Articles
+// -----------------------------------------------
 
 let upTitle = document.querySelector('#up-title');
 let upImg = document.querySelector('#up-image');
@@ -166,11 +168,14 @@ let select_id = document.querySelector('#select-id');
 let content = document.querySelector('#content');
 let oldimage = document.querySelector('#old-image');
 
-//----------------
-//       get data to modale
-// ---------------
 
+
+// ------get data to modale
+
+let errorThumbnail = document.querySelector('#errorThumbnail')
 const editeArticle = (id) => {
+
+    resetRq();
     localStorage.setItem('updateId', id);
     fetch(baseUrl + `/articles/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -186,7 +191,7 @@ const editeArticle = (id) => {
             if (delta && delta.ops) {
                 cleanText = delta.ops.map(op => op.insert).join("");
             } else {
-                cleanText = rawContent; // បើមិនមែន Delta ទេ ទុកវាដដែល
+                cleanText = rawContent; // if no data vea tok ddel
             }
         }catch(e){
             cleanText = rawContent.replace(/<\/?[^>]+(>|$)/g, "");
@@ -204,9 +209,7 @@ const editeArticle = (id) => {
     });
 }
 
-// ------function validate
-let errorThumbnail = document.querySelector('#errorThumbnail')
-// errorThumbnail = "";
+// --------------validateThumbnail = "";
 function validateThumbnail(file) {
     let allowed = ["image/jpeg", "image/png"];
     let maxSize = 1024 * 1024; // 1MB
@@ -218,10 +221,12 @@ function validateThumbnail(file) {
 
     if (file.size > maxSize) {
         errorThumbnail.textContent = "Image must be under 1MB";
+        upImg.classList.add("rq")
         return false;
     }
 
     errorThumbnail.textContent = "";
+    upImg.classList.remove("rq")
     return true;
 }
 
@@ -235,10 +240,9 @@ upImg.addEventListener("change", (e) => {
     }
 });
 
-
-//----------------
-//       update articles 
-// ---------------
+//-------------------------------------
+//                       update articles 
+// -----------------------------------
 
 
 let formElement = document.querySelector("#form-data");
@@ -322,8 +326,8 @@ let check_validation = () => {
     }
 
     if (!content.value.trim() || content.value.trim().length < 10) {
-        console.log(content.value.trim().length);
-        console.log(document.querySelector('#content-emty'));
+        // console.log(content.value.trim().length);
+        // console.log(document.querySelector('#content-emty'));
         
         document.querySelector('#content-emty').innerHTML = "Title is required, must be at least 10 characters long."; 
         isvalid = false;
@@ -335,6 +339,7 @@ let check_validation = () => {
     return isvalid;
 }
 
+
 // Remove error messages when user types or changes value
 
 upTitle.addEventListener("keyup", () => {
@@ -343,6 +348,7 @@ upTitle.addEventListener("keyup", () => {
     document.querySelector('#title-emty').innerHTML = "";
   }
 });
+
 content.addEventListener("keyup", () => {
   if (content.value.trim() !== "" ) {
     content.classList.remove("rq");
@@ -350,13 +356,63 @@ content.addEventListener("keyup", () => {
   }
 });
 
-upTitle.addEventListener("focus", () => {
-  upTitle.classList.add("focused");
-})
 
-upTitle.addEventListener("blur", () => {
-  upTitle.classList.remove("focused");
-})
+/* ================= INPUT FOCUS EFFECT all ================= */
+
+upTitle.addEventListener("blur", function () {
+  if(upTitle.value.trim() === ""){
+    document.querySelector('#title-emty').innerHTML = "Title is required";
+    upTitle.classList.remove("rq");
+    upTitle.classList.remove("focused");
+    upTitle.classList.add('rq')
+  }else{
+    upTitle.classList.add('focused');
+    document.querySelector('#title-emty').innerHTML = "";
+  }
+});
+
+content.addEventListener("blur", function () {
+  if(content.value.trim() === ""){
+    document.querySelector('#content-emty').innerHTML = "Title is required, must be at least 10 characters long.";
+    content.classList.remove("rq");
+    content.classList.remove("focused");
+    content.classList.add('rq')
+  }else{
+    content.classList.add('focused');
+    document.querySelector('#content-emty').innerHTML = "";
+  }
+});
+
+select_id.addEventListener("blur", function () {
+  if(select_id.option === ""){
+    select_id.classList.remove("focused");
+  }else{
+    select_id.classList.add('focused');
+  }
+});
+
+upImg.addEventListener("blur", function () {
+  if(upImg.value === ""){
+    upImg.classList.remove("focused");
+  }else{
+    upImg.classList.add('focused');
+  }
+});
+
+
+// --------------reset focused all
+function resetRq(){
+    errorThumbnail.textContent = "";
+    upImg.classList.remove("rq");
+    upTitle.classList.remove("rq");
+    document.querySelector('#title-emty').innerHTML = "";
+    document.querySelector('#content-emty').innerHTML = "";
+    content.classList.remove('rq');
+    upImg.classList.remove("focused");
+    select_id.classList.remove("focused");
+    content.classList.remove("focused");
+    upTitle.classList.remove("focused");
+}
 
 // ===================show toast
 
