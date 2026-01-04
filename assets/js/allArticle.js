@@ -350,6 +350,14 @@ content.addEventListener("keyup", () => {
   }
 });
 
+upTitle.addEventListener("focus", () => {
+  upTitle.classList.add("focused");
+})
+
+upTitle.addEventListener("blur", () => {
+  upTitle.classList.remove("focused");
+})
+
 // ===================show toast
 
 function showError(msg) {
@@ -368,3 +376,21 @@ function showSuccess(msg) {
   setTimeout(() => toastSuccess.classList.remove("show"), 3000);
 }
 
+function showToastSuccess(msg) {
+
+  const toastSuccess = document.querySelector("#createSuccess");
+  let isCreated = sessionStorage.getItem("isCreated");
+  if (isCreated) {
+    toastSuccess.innerHTML = `<i class="bi bi-check-circle-fill me-2 fs-5"></i> ${msg}`;
+    setTimeout(() => toastSuccess.classList.add("show"), 800);
+    sessionStorage.removeItem("isCreated");
+  }
+
+  setTimeout(() => toastSuccess.classList.remove("show"), 4000);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (sessionStorage.getItem("isCreated")) {
+    showToastSuccess("Article created successfully"); 
+  }
+});

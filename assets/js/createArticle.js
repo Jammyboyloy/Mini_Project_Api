@@ -209,10 +209,10 @@ inputForm.addEventListener("submit", (e) => {
     })
     .then((res) => res.json())
     .then((res) => {
-      showToastSuccess("Article created successfully!");
-      // location.href = "../../../Article/allArticle.html";
-      inputForm.reset();
-      quill.setText("");
+      if(res.result === true){
+        location.href = "../Article/allArticle.html";
+        sessionStorage.setItem("isCreated","true");
+      }
     });
   // .catch((err) => {
   //   console.error(err);
