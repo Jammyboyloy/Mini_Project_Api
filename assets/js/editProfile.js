@@ -47,6 +47,7 @@ inputs.forEach((input, index) => {
       mes[index].innerHTML = "Cannot start with a number";
       input.classList.add("rq");
     }
+    input.classList.remove("focused");
   });
 
   input.addEventListener("input", () => {

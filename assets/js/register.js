@@ -81,7 +81,6 @@ form.addEventListener("submit", (event) => {
         console.log("Registration successful:", data);
 
         sessionStorage.setItem("isRegister", "true");
-        sessionStorage.setItem("toastMsg", "Register successful Please login.");
 
         location.href = "../index.html";
       }
