@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
+  <link rel="icon" href="../assets/image/logo.png" type="image/png">
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/bootstrap.css">
@@ -22,7 +23,12 @@
             data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
             <i class="bi bi-list"></i>
           </button>
-          <a href="dashboard.html" class="navbar-brand text-primary fs-4 p-0 m-0">Post</a>
+          <a href="dashboard.html" class="navbar-brand text-primary">
+            <div class="d-flex align-items-end gap-2">
+              <img src="../assets/image/logo.png" alt="" style="width: 40px;">
+              <p class="p-0 m-0 fs-4 fw-medium">ArticleHub</p>
+            </div>
+          </a>
         </div>
 
         <div class="d-flex gap-3 ms-auto">
@@ -50,8 +56,8 @@
         </button>
 
 
-        <div class="offcanvas offcanvas-start border-end bg-main" style="width: 250px;" data-bs-scroll="true" tabindex="-1"
-          id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+        <div class="offcanvas offcanvas-start border-end bg-main" style="width: 250px;" data-bs-scroll="true"
+          tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
           <h5 class="offcanvas-title border-bottom py-2 mb-3 px-3 text-primary" id="offcanvasWithBothOptionsLabel">
             Post</h5>
           <ul class="nav flex-column gap-2 px-3">
@@ -135,7 +141,7 @@
       <div class="row gy-3 dashboard-container">
 
       </div>
-      <button class="btn bg-btn text-white mx-auto mt-4" id="loadMore" style="display: none;">Load more</button>
+      <button class="btn bg-btn text-white mx-auto mt-4 px-4" id="loadMore" style="display: none;">Load more</button>
     </div>
 
     <div class="py-3"></div>

@@ -286,3 +286,11 @@ tbody tr.actionTable td {
 }
 
 /* --------------------------------- */
+
+#theme-toggle {
+  transition: transform .5s ease-in-out;
+}
+
+.rotate {
+  transform: rotate(360deg);
+}
