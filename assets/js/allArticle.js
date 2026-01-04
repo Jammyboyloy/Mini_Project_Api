@@ -136,7 +136,7 @@ document.querySelector('#confirmDelete').addEventListener('click',function(){
 
     if(!getIdtodelete){
         showError("Delete Id false");
-    }else{
+    }
         fetch(baseUrl+`/articles/${getIdtodelete}`,{
             method:'DELETE',
             headers:{Authorization:`Bearer ${token}`}
@@ -147,9 +147,8 @@ document.querySelector('#confirmDelete').addEventListener('click',function(){
             bootstrap.Modal.getInstance(document.getElementById("deleteArticle")).hide();
             showSuccess("Article Delete successfully!");
             allArticles();
-        
+            
         })
-    }
 
 })
     
