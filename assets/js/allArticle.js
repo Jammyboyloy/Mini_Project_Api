@@ -1,6 +1,6 @@
 
-let baseUrl = "http://blogs.csm.linkpc.net/api/v1";
-let token = localStorage.getItem("token");
+const baseUrl = "http://blogs.csm.linkpc.net/api/v1";
+const token = localStorage.getItem("token");
 
 //----------------------------
 //              Get Profile
@@ -25,11 +25,6 @@ const getprofile = () =>{
 // ---call getprofile
 getprofile();
 
-// --link to page detailArticle
-function detail(id) {
-  sessionStorage.setItem("idArticle",id);
-  location.href = "detailArticle.html";
-}
 
 //----------------------------
 //           Darkmode
@@ -69,9 +64,11 @@ const allArticles = () =>{
     })
     .then(res => res.json())
     .then(res =>{
-        if(res.result !=""){
+        if(res.result){
+            var reversedData = res.data.items.reverse();
+            showitems = ''
             let row = '';
-            for(let el of res.data.items){
+            for(let el of reversedData){
                 showitems++;
                 const isoDateString = el.createdAt;
                 const date = new Date(isoDateString);
@@ -92,27 +89,12 @@ const allArticles = () =>{
                         <td class="text-main">
                             ${khmerTime}
                         </td>
-                        <td class="">
-                            <button class="btn btn-sm nav-text" data-bs-toggle="modal" data-bs-target="#deleteArticle">
-                                <i class="bi bi-trash3"></i>
+                        <td class="p-0">               
+                            <button class="btn btn-sm nav-text p-0 ms-3 me-4" data-bs-toggle="modal"  data-bs-target="#articleEdit" onclick="editeArticle(${el.id})">
+                            <i class="bi bi-pencil-square fs-5"></i>
                             </button>
-
-                                     <!-- modol Delete Article -->
-                                    <div class="modal fade" id="deleteArticle" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content rounded-3 bg-main">
-                                                    <div class="modal-body text-center">
-                                                        <h5 class="text-danger fw-medium mb-3">Delete Article</h5>
-                                                        <p class="text-secondary">Are you sure you want to delete Article?</p>
-                                                        <button type="button" class="btn btn-outline-secondary px-5 py-2" data-bs-dismiss="modal">Cancel</button>
-                                                        <button class="btn btn-danger ms-2 px-5 py-2" id="deleteCategory" onclick="delArticle(${el.id})">Delete</button>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                            <button class="btn btn-sm nav-text me-1" data-bs-toggle="modal"  data-bs-target="#articleEdit" onclick="editeArticle(${el.id})">
-                                <i class="bi bi-pencil-square"></i>
+                            <button class="btn btn-sm nav-text p-0" data-bs-toggle="modal" data-bs-target="#deleteArticle" onclick="showModledelete(${el.id})">
+                                <i class="bi bi-trash3 fs-5 p-0"></i>
                             </button>
                         </td>
                     </tr>
@@ -134,6 +116,9 @@ const allArticles = () =>{
             }
         }
     })
+    .catch(error =>{
+        showError("Edit Article false");
+    })
 }
 
 // ----call all Articles
@@ -142,27 +127,32 @@ allArticles();
 //----------------------------
 //      Delete Own Article
 // --------------------------
-const delArticle = function(id){
-    event.preventDefault();
-    console.log(id);
-    fetch(baseUrl+`/articles/${id}`,{
-        method:'DELETE',
-        headers:{Authorization:`Bearer ${token}`}
-    })
-    .then(res => res.json())
-    .then(res =>{
-        if(res.result){
+
+let getIdtodelete = null
+function showModledelete(id){
+    getIdtodelete = id;
+}
+document.querySelector('#confirmDelete').addEventListener('click',function(){
+
+    if(!getIdtodelete){
+        showError("Delete Id false");
+    }else{
+        fetch(baseUrl+`/articles/${getIdtodelete}`,{
+            method:'DELETE',
+            headers:{Authorization:`Bearer ${token}`}
+        })
+        .then(res => res.json())
+        .then(res =>{
             console.log(res);
             bootstrap.Modal.getInstance(document.getElementById("deleteArticle")).hide();
             showSuccess("Article Delete successfully!");
             allArticles();
-        }
-    })
-    .catch(error => {
-        console.error("Error during delete:", error);
-    });
+        
+        })
+    }
+
+})
     
-}
 
 //----------------------------
 //      Loop all category for update data

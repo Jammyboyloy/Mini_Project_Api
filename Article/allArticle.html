@@ -134,7 +134,7 @@
           </ul>
      </aside>
 
-     <main class="content p-5 bg-secondary">
+     <main class="content p-5 bg-secondary overflow-hiden">
           <div class="container-fluid">
                <div class="p-4 d-flex justify-content-between align-items-start">
                <div>
@@ -145,37 +145,33 @@
                     <i class="bi bi-plus-circle me-1"></i> Create Article
                </a>
           </div>
-          <div class="row">
-               <div class="col-12">
-                    <div class="p-3 bg-main rounded-3">
-                         <div class="row">
-                              <div class="col-4 mb-3">
-                                   <input type="text" class="form-control py-2 border-primary " placeholder="search articles">
+          <div class="container-fluid overflow-hidden">
+               <div class="row">
+                    <div class="col-12">
+                              <table class="table table-hover text-center align-middle table-dark rounded-3 overflow-hidden" id="table-darkmode">
+                                   <thead class="table-primary ">
+                                        <tr>
+                                             <th></th>
+                                             <th class="text-main py-3">Title</th>
+                                             <th class="text-main py-3 ">Category</th>
+                                             <th class="text-main py-3">Create At</th>
+                                             <th class="text-main py-3 ">Actions</th>
+                                        </tr>
+                                   </thead>
+                                   <tbody id="tbody">
+     
+                                   </tbody>
+                              </table>
+                              <div class="p-3 my-0 Is-nodata d-flex" id="undata">
+                                   <div class="m-auto text-center">
+                                        <i class="bi bi-search fs-1 text-secondary"></i>
+                                        <p class="my-auto text-main fw-bold">No data found</p>
+                                   </div>
                               </div>
-                         </div>
-                         <table class="table table-hover text-center align-middle table-dark" id="table-darkmode">
-                              <thead class="table-primary">
-                                   <tr>
-                                        <th></th>
-                                        <th class="text-main py-3">Title</th>
-                                        <th class="text-main py-3 ">Category</th>
-                                        <th class="text-main py-3">Create At</th>
-                                        <th class="text-main py-3">Actions</th>
-                                   </tr>
-                              </thead>
-                              <tbody id="tbody">
-
-                              </tbody>
-                         </table>
-                         <div class="p-3 my-0 Is-nodata d-flex" id="undata">
-                              <div class="m-auto text-center">
-                                   <i class="bi bi-search fs-1 text-secondary"></i>
-                                   <p class="my-auto text-main fw-bold">No data found</p>
+                              <div class="mt-4">
+                                   <p class="text-main">Showing <span id="number"></span> to <span class="entries"></span> of <span class="entries"></span> entries</p> 
                               </div>
-                         </div>
-                         <div class="mt-4">
-                              <p class="text-main">Showing <span id="number"></span> to <span class="entries"></span> of <span class="entries"></span> entries</p> 
-                         </div>
+     
                     </div>
                </div>
           </div>
@@ -207,7 +203,7 @@
                                         </div>
                                         <div class="col-12">
                                              <label class="form-label my-2 text-main">Content* : </label>
-                                             <textarea class="form-select form-select-sm" aria-label="Small select example" id="content">
+                                             <textarea class="form-control" aria-label="Small select example" id="content">
                                    
                                              </textarea>
                                              <span id="content-emty" class="d-block"></span>
@@ -238,6 +234,19 @@
 
 
                     </div>
+               </div>
+          </div>
+     </div>
+          <!-- modol Delete Article -->
+     <div class="modal fade" id="deleteArticle" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content rounded-3 bg-main">
+                         <div class="modal-body text-center">
+                              <h5 class="text-danger fw-medium mb-3">Delete Article</h5>
+                              <p class="text-secondary">Are you sure you want to delete Article?</p>
+                              <button type="button" class="btn btn-outline-secondary px-5 py-2" data-bs-dismiss="modal">Cancel</button>
+                              <a class="btn btn-danger ms-2 px-5 py-2"  id="confirmDelete">Delete</a>
+                         </div>
                </div>
           </div>
      </div>
