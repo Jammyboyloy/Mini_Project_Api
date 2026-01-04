@@ -5,11 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>All Article</title>
+  <!-- Load dotlottie-wc -->
+  <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.7.1/dist/dotlottie-wc.js" type="module"></script>
   <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/bootstrap.css">
   <link rel="stylesheet" href="../assets/bootstrap-icons/bootstrap-icons.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <style>
-     /* .if-nondata{
+    /* .if-nondata{
           background-color: red;
      } */
   </style>
@@ -53,9 +55,9 @@
         </button>
 
 
-        <div class="offcanvas offcanvas-start border-end" style="width: 250px;" data-bs-scroll="true" tabindex="-1"
+        <div class="offcanvas offcanvas-start border-end bg-main" style="width: 250px;" data-bs-scroll="true" tabindex="-1"
           id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-          <h5 class="offcanvas-title border-bottom py-2 mb-3 px-3" id="offcanvasWithBothOptionsLabel">
+          <h5 class="offcanvas-title border-bottom py-2 mb-3 px-3 text-primary" id="offcanvasWithBothOptionsLabel">
             Post</h5>
           <ul class="nav flex-column gap-2 px-3">
             <li class="nav-item">
@@ -145,32 +147,34 @@
       <div class="container-fluid overflow-hidden">
         <div class="row">
           <div class="col-12">
-          <table class="table table-hover  text-center align-middle  overflow-hidden mb-0"
-               >
-               <thead class="table-primary ">
-                    <tr>
-                    <th></th>
-                    <th class="text-main py-3">Title</th>
-                    <th class="text-main py-3 ">Category</th>
-                    <th class="text-main py-3">Create At</th>
-                    <th class="text-main py-3 ">Actions</th>
-                    </tr>
-               </thead>
-               <tbody id="tbody">
+            <table class="table text-center align-middle  overflow-hidden mb-0 rounded-3">
+              <thead class="table-primary ">
+                <tr>
+                  <th></th>
+                  <th class="text-main py-3">Title</th>
+                  <th class="text-main py-3 ">Category</th>
+                  <th class="text-main py-3">Create At</th>
+                  <th class="text-main py-3 ">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody">
 
 
-               </tbody>
-          </table>
-          <div class="p-3 my-0  d-flex bg-main my-0"  style=" height: 300px;" id="undata">
-               <div class="m-auto text-center">
-                    <i class="bi bi-search fs-1 text-secondary"></i>
-                    <p class="my-auto text-main fw-bold">No data found</p>
-               </div>
-          </div>
-          <div class=" bg-main py-3">
-            <p class="text-main ms-3">Showing <span id="number"></span> to <span class="entries"></span> of <span
-                class="entries"></span> entries</p>
-          </div>
+              </tbody>
+            </table>
+            <div class="p-3 my-0  d-flex bg-main my-0" id="undata">
+              <div class="m-auto text-center">
+                <!-- Lottie Animation -->
+                <dotlottie-wc src="../assets/image/Error 404.json" style="height: 350px" loop autoplay speed="1"
+                  mode="forward">
+                </dotlottie-wc>
+                <p class="my-auto text-secondary fs-5">No data found</p>
+              </div>
+            </div>
+            <div class=" bg-main py-3">
+              <p class="text-main ms-3">Showing <span id="number"></span> to <span class="entries"></span> of <span
+                  class="entries"></span> entries</p>
+            </div>
 
           </div>
         </div>
@@ -188,7 +192,7 @@
                     <div class="col-12">
                       <label class="form-label my-2 text-main">Edit Title <span class="text-danger">*</span> : </label>
                       <div class="position-relative text-secondary mb-2 text-main">
-                        <input type="text" id="up-title" class="form-control bg-prime fs-text ps-7 border"
+                        <input type="text" id="up-title" class="form-control bg-main text-main fs-text ps-7 border"
                           placeholder="edit title">
                       </div>
                       <span id="title-emty" class="d-block text-danger"></span>
@@ -196,25 +200,28 @@
                     </div>
                     <div class="col-12">
                       <label class="form-label my-2 text-main">Edit Category : </label>
-                      <select class="form-select form-select-sm" aria-label="Small select example" id="select-id">
+                      <select class="form-select form-select-sm bg-main text-main border"
+                        aria-label="Small select example" id="select-id">
 
                       </select>
                     </div>
                     <div class="col-12">
                       <label class="form-label my-2 text-main">Description <span class="text-danger">*</span> : </label>
-                      <textarea class="form-control" aria-label="Small select example" id="content" placeholder="edit content">
+                      <textarea class="form-control mb-2 bg-main text-main border" aria-label="Small select example"
+                        id="content" placeholder="edit content">
 
                       </textarea>
                       <span id="content-emty" class="d-block text-danger"></span>
                     </div>
                     <div class="col-12">
                       <label class="form-label my-2 text-main">New Image : </label>
-                      <input type="file" id="up-image" class="form-control bg-prime fs-text ps-7 border" placeholder="">
-                      <p id="errorThumbnail" class="text-danger" ></p>
+                      <input type="file" id="up-image" class="form-control bg-main text-main fs-text ps-7 border mb-2"
+                        placeholder="">
+                      <p id="errorThumbnail" class="text-danger"></p>
                     </div>
                     <div class="col-12">
-                      <input type="text" disabled id="old-image" class="form-control bg-prime fs-text ps-7 border my-3"
-                        placeholder="">
+                      <input type="text" disabled id="old-image"
+                        class="form-control bg-main text-main fs-text ps-7 border my-3" placeholder="">
                     </div>
                     <div class="d-flex justify-content-end mt-3">
                       <button type="button" class="btn btn-outline-secondary px-5 py-2"
@@ -244,9 +251,10 @@
           </div>
         </div>
       </div>
-
+      <div class="py-3"></div>
       <div class="my-toast-error alert alert-danger text-danger p-3 fs-6 rounded-3" style="z-index: 1080"></div>
       <div class="my-toast-success alert alert-success text-success p-3 fs-6 rounded-3" style="z-index: 1080"></div>
+      <div class="my-toast-success alert alert-success text-success p-3 fs-6 rounded-3" id="createSuccess"></div>
     </div>
 
   </main>

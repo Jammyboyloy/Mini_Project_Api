@@ -12,6 +12,16 @@ removeProfile.addEventListener("click", () => {
 
 function editAvatar() {
   const file = uploadImage.files[0];
+  if (!file) return;
+
+  const MAX_SIZE = 1 * 1024 * 1024; // 1MB
+
+  if (file.size > MAX_SIZE) {
+    showToastError("Avatar must not exceed 1MB.");
+    uploadImage.value = ""; // optional reset
+    return;
+  }
+
   const formData = new FormData();
   formData.append("avatar", file);
 
@@ -25,20 +35,23 @@ function editAvatar() {
     .then((res) => res.json())
     .then((item) => {
       if (item.result === true) {
-        avatar.src = URL.createObjectURL(file);
+        const previewUrl = URL.createObjectURL(file);
+        avatar.src = previewUrl;
+
         const userProfileImg = document.querySelector(".userProfile img");
-        if (userProfileImg) userProfileImg.src = URL.createObjectURL(file);
+        if (userProfileImg) userProfileImg.src = previewUrl;
+
         showToastSuccess("Update avatar successfully.");
       } else {
-        showToastError("Avatar must not exceed 1MB.");
+        showToastError(item.message || "Upload failed.");
       }
-    });
+    })
 }
 
-const defaultAvatar = "http://blogs.csm.linkpc.net/api/v1/uploads/avatars/default-avatar.png";
+const defaultAvatar =
+  "http://blogs.csm.linkpc.net/api/v1/uploads/avatars/default-avatar.png";
 
 function removeAvatar() {
-
   if (avatar.src === defaultAvatar) {
     showToastError("Default avatar cannot delete.");
     return;
@@ -60,7 +73,7 @@ function removeAvatar() {
 
         showToastSuccess("Remove avatar successfully.");
       }
-    })
+    });
 }
 
 function showToastSuccess(message) {
