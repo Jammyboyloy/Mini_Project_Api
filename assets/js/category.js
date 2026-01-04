@@ -25,8 +25,8 @@ function loadCategories(page = 1, search = "") {
       if (item.length === 0) {
         setSearchError(true);
         row = `
-          <tr>
-            <td colspan="2" class="text-center pb-4">
+          <tr class="actionTable">
+            <td colspan="2" class="text-center pb-4 ">
                <!-- Lottie Animation -->
               <dotlottie-wc src="../assets/image/Error 404.json" style="height: 350px" loop autoplay speed="1"
                 mode="forward">
@@ -53,14 +53,14 @@ function loadCategories(page = 1, search = "") {
               <td class="py-3 ps-4 fw-medium">${categoryName}</td>
               <td class="py-3 pe-4 text-end">
                 <button
-                  class="btn btn-sm nav-text me-3"
+                  class="btn btn-sm nav-text me-3 border-0"
                   data-bs-toggle="modal"
                   data-bs-target="#categoryEdit"
                   onclick="openEditModal('${data.id}', '${data.name}')">
-                  <i class="bi bi-pencil-square fs-5"></i>
+                  <i class="bi bi-pencil-square fs-5 "></i>
                 </button>
                 <button
-                  class="btn btn-sm nav-text p-0"
+                  class="btn btn-sm nav-text p-0 border-0"
                   onclick="openDeleteModal('${data.id}','${data.name}')"
                   data-bs-toggle="modal"
                   data-bs-target="#categoryDelete">
@@ -183,11 +183,12 @@ function setCreateError(isError) {
 }
 document.getElementById("createCategory").addEventListener("show.bs.modal" , ()=>{
   document.getElementById("createNewCategoryName").value = "";
-   setCreateError(false);
+  setCreateError(false);
 })
 document.getElementById("createNewCategory").onclick = () => {
   const name = document.getElementById("createNewCategoryName").value.trim();
   if (!name) {
+    setCreateError(true)
     showError("Category name cannot be empty");
     return;
   }
@@ -279,7 +280,8 @@ function openEditModal(id, name) {
 btnEdit.onclick = () => {
   const newName = document.querySelector("#editCategoryName").value.trim();
   if (!newName) {
-    showError("Category not found.");
+    setEditCreateError(true)
+    showError("Please Input New Category");
     return;
   }
   fetch(`${baseUrl}/categories/${editID}`, {
