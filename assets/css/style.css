@@ -18,6 +18,7 @@ body {
    --page-disabled-bg: #f1f3f5;
   --page-disabled-text: #adb5bd;
   --page-disabled-border: #dee2e6;
+  --table-tr : rgba(225, 233, 242, 0.416);
   
 }
 
@@ -34,6 +35,7 @@ body {
   --page-disabled-bg: #2b3035;
   --page-disabled-text: #6c757d;
   --page-disabled-border: #343a40;
+  --table-tr : #334155;
 }
 
 .bg-main {
@@ -190,6 +192,13 @@ table td {
   color: var(--text-secondary) !important;
 }
 
+tbody tr:not(.actionTable):hover td {
+  background-color: var(--table-tr) !important;
+}
+tbody tr.actionTable td {
+  background-color: transparent; 
+  pointer-events: none;
+}
 .focused {
   border: none;
   box-shadow: 0 0 0 0.07rem #0d6efd !important;
