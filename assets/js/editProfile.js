@@ -14,120 +14,136 @@ btnLogout2.addEventListener("click", () => {
       }
     });
 });
-document.addEventListener("DOMContentLoaded", () => {
-  const GET_PROFILE_URL = `${baseUrl}/auth/profile`;
-  const UPDATE_PROFILE_URL = `${baseUrl}/profile`;
-  const TOKEN = localStorage.getItem("token");
 
-  const fname = document.getElementById("fname");
-  const lname = document.getElementById("lname");
-  const email = document.getElementById("email1");
-  const btnEdit = document.getElementById("btnEdit");
-  const msgs = document.querySelectorAll(".mes");
+const fname = document.querySelector("#fname");
+const lname = document.querySelector("#lname");
+const emailEdit = document.querySelector("#emailEdit");
+const btnEdit = document.querySelector("#btnEdit");
+const getInfoBack = document.querySelector(".getInfoBack");
+const check = [fname, lname];
+const inputs = [fname, lname, emailEdit];
+const mes = document.querySelectorAll(".mes");
+const messages = [
+  "First name is required",
+  "Last name is required",
+  "Email is required",
+];
 
-  const showFname = document.getElementById("firstname");
-  const showLname = document.getElementById("lastname");
-  const showEmail = document.getElementById("email");
-
-  const namePattern = /^[A-Za-z]/;
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  // get profile
-  fetch(GET_PROFILE_URL, {
-    headers: { 
-      Authorization: `Bearer ${TOKEN}` 
-    },
-  })
-    .then(res => res.json())
-    .then(res => {
-      const user = res.data;
-      fname.value = user.firstName;
-      lname.value = user.lastName;
-      email.value = user.email;
-    });
-
-  // clear messages on input
-  const inputs = [fname, lname, email];
+getInfoBack.addEventListener("click", () => {
+  getInfo();
   inputs.forEach((input, index) => {
-    input.addEventListener("input", () => {
-      msgs[index].innerText = "";
-    });
+    mes[index].innerHTML = "";
+    input.classList.remove("rq");
+    input.classList.remove("focused");
+  });
+});
+
+inputs.forEach((input, index) => {
+  input.addEventListener("blur", () => {
+    if (input.value === "") {
+      mes[index].innerHTML = messages[index];
+      input.classList.add("rq");
+    } else if (/^\d/.test(input.value)) {
+      mes[index].innerHTML = "Cannot start with a number";
+      input.classList.add("rq");
+    }
   });
 
-  // edit profile
-  btnEdit.addEventListener("click", () => {
-    const firstName = fname.value.trim();
-    const lastName = lname.value.trim();
-    const emailVal = email.value.trim();
-    let ok = true;
-
-    if (!firstName) {
-      msgs[0].innerText = "First name required";
-      ok = false;
-    } else if (!namePattern.test(firstName)) {
-      msgs[0].innerText = "First name must start with a letter";
-      ok = false;
+  input.addEventListener("input", () => {
+    if (input.value === "") {
+      mes[index].innerHTML = "";
+      input.classList.remove("rq");
     }
-
-    if (!lastName) {
-      msgs[1].innerText = "Last name required";
-      ok = false;
-    } else if (!namePattern.test(lastName)) {
-      msgs[1].innerText = "Last name must start with a letter";
-      ok = false;
-    }
-
-    if (!emailVal) {
-      msgs[2].innerText = "Email required";
-      ok = false;
-    } else if (!emailPattern.test(emailVal)) {
-      msgs[2].innerText = "Invalid email format";
-      ok = false;
-    }
-
-    if (!ok) return;
-
-    fetch(UPDATE_PROFILE_URL, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email: emailVal,
-      }),
-    })
-      .then(res => res.json())
-      .then(() => {
-        // update UI
-        if (showFname) {
-          showFname.value = firstName;
-        };
-        if (showLname){
-          showLname.value = lastName;
-        }
-        if (showEmail) {
-          showEmail.value = emailVal;
-        }
-        // close modal
-        bootstrap.Modal.getInstance(document.getElementById("exampleModal4")).hide();
-        showToast("Profile updated successfully");
-      });
-
-      getProfile();
   });
 
-  // Toast function
-  function showToast(message) {
-    const toast = document.getElementById("success");
-    toast.innerHTML = `
-      <i class="bi bi-check-circle-fill me-2 fs-5"></i> ${message}
-    `;
-    toast.classList.add("show");
-    setTimeout(() => {
-      toast.classList.remove("show");
-    }, 4000);
+  input.addEventListener("focus", () => {
+    input.classList.add("focused");
+    input.select();
+  });
+});
+
+emailEdit.addEventListener("input", () => {
+  if (emailEdit.value.includes("@gmail.com") || emailEdit.value === "") {
+    mes[2].innerHTML = "";
+    emailEdit.classList.remove("rq");
   }
 });
+
+emailEdit.addEventListener("blur", () => {
+  if (emailEdit.value === "") {
+    mes[2].innerHTML = "Email is required";
+    emailEdit.classList.add("rq");
+  } else if (/^\d/.test(emailEdit.value)) {
+    mes[2].innerHTML = "Cannot start with a number";
+    emailEdit.classList.add("rq");
+  } else if (!emailEdit.value.includes("@gmail.com")) {
+    mes[2].innerHTML = "Please enter a valid email address";
+    emailEdit.classList.add("rq");
+  }
+});
+
+btnEdit.addEventListener("click", () => {
+  let isValid = true;
+  inputs.forEach((input, index) => {
+    if (/^\d/.test(input.value)) {
+      mes[index].innerHTML = "Cannot start with a number";
+      input.classList.add("rq");
+      isValid = false;
+    }
+
+    if (input.value === "") {
+      mes[index].innerHTML = messages[index];
+      input.classList.add("rq");
+      isValid = false;
+    }
+  });
+
+  if (!emailEdit.value.includes("@gmail.com")) {
+    mes[2].innerHTML = "Please enter a valid email address";
+    emailEdit.classList.add("rq");
+    isValid = false;
+  }
+
+  if (isValid) {
+    updateInfo();
+    btnEdit.setAttribute("data-bs-dismiss", "modal");
+    btnEdit.click();
+  }
+});
+
+function updateInfo() {
+  const data = {
+    firstName: fname.value,
+    lastName: lname.value,
+    email: emailEdit.value,
+  };
+
+  fetch(baseUrl + "/profile", {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((item) => {
+      if (item.result === true) {
+        showToastSuccess("Info updated successfully");
+        getProfile();
+        getInfo();
+      }
+    });
+}
+
+// Toast function
+function showToastSuccess(message) {
+  const toast = document.getElementById("editSuccess");
+  toast.innerHTML = `
+      <i class="bi bi-check-circle-fill me-2 fs-5"></i> ${message}
+    `;
+  toast.classList.add("show");
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 4000);
+}

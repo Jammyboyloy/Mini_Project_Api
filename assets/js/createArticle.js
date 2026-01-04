@@ -192,6 +192,10 @@ inputForm.addEventListener("submit", (e) => {
   })
     .then((res) => res.json())
     .then((article) => {
+      if(article.result === false){
+        showToastError("Error creating article. Please try again.");
+        return;
+      }
       /* UPLOAD THUMBNAIL */
       const formData = new FormData();
       formData.append("thumbnail", thumbnail.files[0]);
@@ -206,20 +210,27 @@ inputForm.addEventListener("submit", (e) => {
     })
     .then((res) => res.json())
     .then((res) => {
-      showToast(res.message || "Article created successfully!");
+      showToastSuccess("Article created successfully!");
       inputForm.reset();
       quill.setText("");
     })
-    .catch((err) => {
-      console.error(err);
-      showToast("Error creating article. Please try again.");
-    });
+    // .catch((err) => {
+    //   console.error(err);
+    //   showToast("Error creating article. Please try again.");
+    // });
 });
 
 /* ================= TOAST NOTIFICATION ================= */
-function showToast(msg) {
-  const toastError = document.querySelector(".my-toast-success");
+function showToastError(msg) {
+  const toastError = document.querySelector(".my-toast-error");
   toastError.innerHTML = `<i class="bi bi-exclamation-circle-fill me-2 fs-5"></i> ${msg}`;
   toastError.classList.add("show");
   setTimeout(() => toastError.classList.remove("show"), 4000);
+}
+
+function showToastSuccess(msg) {
+  const toastSuccess = document.querySelector(".my-toast-success");
+  toastSuccess.innerHTML = `<i class="bi bi-check-circle-fill me-2 fs-5"></i> ${msg}`;
+  toastSuccess.classList.add("show");
+  setTimeout(() => toastSuccess.classList.remove("show"), 4000);
 }
