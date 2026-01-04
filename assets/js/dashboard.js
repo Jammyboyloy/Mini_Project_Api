@@ -122,7 +122,7 @@ function showToast(msg) {
   let isLogin = sessionStorage.getItem("isLogin");
   if (isLogin) {
     toastSuccess.innerHTML = `<i class="bi bi-check-circle-fill me-2 fs-5"></i> ${msg}`;
-    toastSuccess.classList.add("show");
+    setTimeout(() => toastSuccess.classList.add("show"), 800);
     sessionStorage.removeItem("isLogin");
   }
 
