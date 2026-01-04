@@ -1,29 +1,36 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const baseurl =`${baseUrl}/auth/profile`;
-  const token = localStorage.getItem("token");
-  fetch(baseurl, {
-    method: "GET",
+const profileID = document.querySelector("#profile-id");
+const email = document.querySelector("#email");
+const firstname = document.querySelector("#firstname");
+const lastname = document.querySelector("#lastname");
+const registerAt = document.querySelector("#registered-at");
+const username = document.querySelector("#username");
+const avatar = document.querySelector("#avatar");
+const usernames = document.querySelector("#usernames");
+
+// Get Profile
+function getInfo(){
+  fetch(baseUrl + "/auth/profile", {
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
     },
   })
-    .then(res => res.json())
-    .then((res) => {
-      const user = res.data;
-      const avatar = document.getElementById("avatar");
-      if (avatar) {
-        avatar.src = user.avatar ?? "default.png";
-      }
-      document.getElementById("profile-id").value = user.id;
-      document.getElementById("firstname").value = user.firstName;
-      document.getElementById("lastname").value = user.lastName;
-      document.getElementById("email").value = user.email;
-      document.getElementById("registered-at").value = formatDate(user.registeredAt);
-      document.getElementById("username").value = user.firstName + " " + user.lastName;
-      document.getElementById("usernames").innerHTML = user.firstName + " " + user.lastName;
-    })
-});
+    .then((res) => res.json())
+    .then((item) => {
+      profileID.value = item.data.id;
+      email.value = item.data.email;
+      firstname.value = item.data.firstName;
+      lastname.value = item.data.lastName;
+      registerAt.value = formatDate(item.data.registeredAt);
+      username.value = "@" + item.data.firstName + " " + item.data.lastName;
+      avatar.src = item.data.avatar;
+      usernames.textContent = "@" + item.data.firstName + " " + item.data.lastName;
+      fname.value = item.data.firstName;
+      lname.value = item.data.lastName;
+      emailEdit.value = item.data.email;
+    });
+}
+
+getInfo();
 
 function formatDate(isoString) {
   const date = new Date(isoString);

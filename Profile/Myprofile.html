@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>My Profile</title>
   <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/bootstrap.css">
   <link rel="stylesheet" href="../assets/bootstrap-icons/bootstrap-icons.css">
   <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/theme.css">
@@ -27,7 +27,7 @@
             data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
             <i class="bi bi-list"></i>
           </button>
-          <a href="dashboard.html" class="navbar-brand text-primary fs-4 p-0 m-0">Post</a>
+          <a href="../Article/dashboard.html" class="navbar-brand text-primary fs-4 p-0 m-0">Post</a>
         </div>
 
         <div class="d-flex gap-3 ms-auto">
@@ -38,7 +38,7 @@
             <a class="userProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
 
             <ul class="dropdown-menu dropdown-menu-end px-2 bg-main border">
-              <li><a class="dropdown-item nav-text" href="../Profile/Myprofile.html"><i class="bi bi-person me-2"></i>
+              <li><a class="dropdown-item nav-text" href="Myprofile.html"><i class="bi bi-person me-2"></i>
                   Profile</a></li>
               <li>
                 <a type="button" class="dropdown-item nav-text" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -61,7 +61,7 @@
             Post</h5>
           <ul class="nav flex-column gap-2 px-3">
             <li class="nav-item">
-              <a class="nav-link text-main" href="dashboard.html"><i class="bi bi-speedometer2 me-3 icon"></i>
+              <a class="nav-link text-main" href="../Article/dashboard.html"><i class="bi bi-speedometer2 me-3 icon"></i>
                 Dashboard</a>
             </li>
             <li class="nav-item">
@@ -72,17 +72,17 @@
               <div class="collapse" id="myArticle">
                 <ul class="nav flex-column gap-1 mt-1">
                   <li class="nav-item px-2">
-                    <a class="nav-link text-main" href="allArticle.html">All Articles</a>
+                    <a class="nav-link text-main" href="../Article/allArticle.html">All Articles</a>
                   </li>
                   <li class="nav-item px-2">
-                    <a class="nav-link text-main" href="createArticle.html">Create
+                    <a class="nav-link text-main" href="../Article/createArticle.html">Create
                       Article</a>
                   </li>
                 </ul>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-main" href="category.html"><i class="bi bi-box me-3 icon"></i>
+              <a class="nav-link text-main" href="../Article/category.html"><i class="bi bi-box me-3 icon"></i>
                 Category</a>
             </li>
           </ul>
@@ -107,7 +107,7 @@
   <aside class="sidebar border-end position-fixed start-0 py-5 px-3 d-none d-lg-block bg-main">
     <ul class="nav flex-column gap-2">
       <li class="nav-item">
-        <a class="nav-link nav-text" href="dashboard.html"><i class="bi bi-speedometer2 me-3 icon"></i>
+        <a class="nav-link nav-text" href="../Article/dashboard.html"><i class="bi bi-speedometer2 me-3 icon"></i>
           Dashboard</a>
       </li>
       <li class="nav-item">
@@ -118,16 +118,16 @@
         <div class="collapse" id="myArticle1">
           <ul class="nav flex-column gap-1 mt-1">
             <li class="nav-item px-2">
-              <a class="nav-link nav-text" href="allArticle.html">All Articles</a>
+              <a class="nav-link nav-text" href="../Article/allArticle.html">All Articles</a>
             </li>
             <li class="nav-item px-2">
-              <a class="nav-link nav-text" href="createArticle.html">Create Article</a>
+              <a class="nav-link nav-text" href="../Article/createArticle.html">Create Article</a>
             </li>
           </ul>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link nav-text" href="category.html"><i class="bi bi-box me-3 icon"></i> Category</a>
+        <a class="nav-link nav-text" href="../Article/category.html"><i class="bi bi-box me-3 icon"></i> Category</a>
       </li>
     </ul>
   </aside>
@@ -154,13 +154,13 @@
                   </li>
                   <li>
                     <button class="btn dropdown-item nav-text" type="button" data-bs-toggle="modal"
-                      data-bs-target="#exampleModal3">
+                      data-bs-target="#removeAvatar">
                       <i class="bi bi-trash text-danger me-2"></i> Remove
                       Profile
                     </button>
                   </li>
                 </ul>
-                <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3"
+                <div class="modal fade" id="removeAvatar" tabindex="-1" aria-labelledby="exampleModalLabel3"
                   aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content rounded-3 bg-main">
@@ -180,8 +180,8 @@
               <div class="d-flex justify-content-center gap-3">
                 <button class="btn btn-danger px-4" type="button" data-bs-toggle="modal"
                   data-bs-target="#exampleModal2">Log out</button>
-                <button class="btn bg-btn text-white px-4" type="button" data-bs-toggle="modal"
-                  data-bs-target="#exampleModal4">Edit Info</button>
+                <button class="btn bg-btn text-white px-4 getInfoBack" type="button" data-bs-toggle="modal"
+                  data-bs-target="#editInfo">Edit Info</button>
                 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content rounded-3 bg-main">
@@ -194,7 +194,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal fade" id="editInfo" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content rounded-3 bg-main">
                       <div class="modal-body">
@@ -204,7 +204,7 @@
                             <div class="col-12">
                               <label class="form-label my-2 text-main">First Name : </label>
                               <div class="position-relative text-main mb-2">
-                                <input type="text" id="fname" class="form-control bg-main fs-text ps-7 border text-main">
+                                <input type="text" id="fname" class="form-control bg-main fs-text ps-7 border text-main" placeholder="Enter your first name">
                                 <i class="bi bi-person position-absolute icon-input tran-y"></i>
                               </div>
                               <p class="mes text-danger"></p>
@@ -212,7 +212,7 @@
                             <div class="col-12">
                               <label class="form-label my-2 text-main">Last Name : </label>
                               <div class="position-relative text-main mb-2">
-                                <input type="text" id="lname" class="form-control bg-main fs-text ps-7 border text-main">
+                                <input type="text" id="lname" class="form-control bg-main fs-text ps-7 border text-main" placeholder="Enter your last name">
                                 <i class="bi bi-person position-absolute icon-input tran-y"></i>
                               </div>
                               <p class="mes text-danger"></p>
@@ -220,7 +220,7 @@
                             <div class="col-12">
                               <label class="form-label my-2 text-main">Email : </label>
                               <div class="position-relative text-main mb-2">
-                                <input type="email" id="email1" class="form-control bg-main fs-text ps-7 border text-main">
+                                <input type="email" id="emailEdit" class="form-control bg-main fs-text ps-7 border text-main" placeholder="Enter your email">
                                 <i class="bi bi-envelope position-absolute icon-input tran-y"></i>
                               </div>
                               <p class="mes text-danger"></p>
@@ -291,15 +291,16 @@
     </div>
     <div class="my-toast-success alert alert-success text-success p-3 fs-6 rounded-3" id="removeSuccess"></div>
     <div class="my-toast-success alert alert-success text-success p-3 fs-6 rounded-3" id="updateProfileSuccess"></div>
-    <div class="my-toast-success alert alert-success text-success p-3 fs-6 rounded-3" id="success"></div>
+    <div class="my-toast-success alert alert-success text-success p-3 fs-6 rounded-3" id="editSuccess"></div>
+    <div class="my-toast-error alert alert-danger text-danger p-3 fs-6 rounded-3" id="errorTypeFile"></div>
   </main>
   <script src="../assets/bootstrap-5.3.7/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/index.js"></script>
   <script src="../assets/js/baseUrl.js"></script>
-  <script src="../assets/js/Myprofile.js"></script>
   <script src="../assets/js/getProfile.js"></script>
   <script src="../assets/js/editProfile.js"></script>
   <script src="../assets/js/editavatar.js"></script>
+  <script src="../assets/js/Myprofile.js"></script>
   <script src="../assets/js/logout.js"></script>
 
 </body>
