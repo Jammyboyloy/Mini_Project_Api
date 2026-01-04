@@ -3,11 +3,13 @@ let inputForm = document.getElementById("inputForm");
 let title = document.getElementById("Title");
 let category = document.getElementById("Category");
 let thumbnail = document.getElementById("Thumbnail");
+let quillWrapper = document.getElementById("quill-wrapper");
 let errorTitle = document.getElementById("errorTitle");
 let Description = document.getElementById("Description");
 let errorCategory = document.getElementById("errorCategory");
 let errorThumbnail = document.getElementById("errorThumbnail");
 let errorDescription = document.getElementById("errorDescription");
+let isSubmitting = false;
 
 /* ================= QUILL TOOLBAR ================= */
 let toolbarOptions = [
@@ -25,12 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
   quill = new Quill("#Description", {
     theme: "snow",
     placeholder: "Write article description...",
-    modules: {
-      toolbar: toolbarOptions,
-    },
+    modules: { toolbar: toolbarOptions },
   });
-
   loadCategories();
+  initValidation();
 });
 
 /* ================= GET CATEGORIES ================= */
@@ -62,7 +62,6 @@ thumbnail.addEventListener("change", (e) => {
   if (!file) return;
 
   if (!validateThumbnail(file)) {
-    thumbnail.value = "";
     errorThumbnail.textContent =
       "Invalid thumbnail. Please select a JPG or PNG image under 1MB.";
     return;
@@ -79,10 +78,99 @@ function validateThumbnail(file) {
     return false;
   }
   if (file.size > maxSize) {
-    errorThumbnail.textContent = "Image must be under 2MB";
+    errorThumbnail.textContent = "Image must be under 1MB";
     return false;
   }
   return true;
+}
+
+function setError(el, errorEl, message) {
+  if (message) {
+    el.classList.add("rq");
+    errorEl.textContent = message;
+  } else {
+    el.classList.remove("rq");
+    errorEl.textContent = "";
+  }
+}
+
+function initValidation() {
+  title.addEventListener("input", () => {
+    setError(title, errorTitle, title.value.trim() ? "" : "Title is required");
+  });
+
+  category.addEventListener("change", () => {
+    setError(
+      category,
+      errorCategory,
+      category.value ? "" : "Category is required"
+    );
+  });
+
+  thumbnail.addEventListener("change", () => {
+    const file = thumbnail.files[0];
+
+    if (!file) {
+      setError(thumbnail, errorThumbnail, "Thumbnail is required");
+      return;
+    }
+
+    if (!validateThumbnail(file)) {
+      thumbnail.value = "";
+      return;
+    }
+
+    setError(thumbnail, errorThumbnail, "");
+  });
+
+  quill.on("text-change", () => {
+    const isEmpty = quill.getText().trim() === "";
+    setError(
+      quillWrapper,
+      errorDescription,
+      isEmpty ? "Description is required" : ""
+    );
+  });
+
+  quillWrapper.addEventListener("focusin", () => {
+    quillWrapper.classList.add("focused");
+    quillWrapper.classList.remove("rq");
+    errorDescription.textContent = "";
+  });
+
+  quillWrapper.addEventListener("focusout", () => {
+    quillWrapper.classList.remove("focused");
+    if (quill.getText().trim() === "") {
+      quillWrapper.classList.add("rq");
+      errorDescription.textContent = "Description is required";
+    }
+  });
+}
+/* ================= FORM VALIDATION ================= */
+function validateForm() {
+  const titleValid = title.value.trim() !== "";
+  const categoryValid = category.value !== "";
+  const descValid = quill.getText().trim() !== "";
+  const thumbValid = thumbnail.files.length > 0;
+
+  setError(title, errorTitle, titleValid ? "" : "Title is required");
+  setError(
+    category,
+    errorCategory,
+    categoryValid ? "" : "Category is required"
+  );
+  setError(
+    quillWrapper,
+    errorDescription,
+    descValid ? "" : "Description is required"
+  );
+  setError(
+    thumbnail,
+    errorThumbnail,
+    thumbValid ? "" : "Thumbnail is required"
+  );
+
+  return titleValid && categoryValid && descValid && thumbValid;
 }
 
 /* ================= INPUT FOCUS EFFECT ================= */
@@ -91,90 +179,55 @@ title.addEventListener("focus", function () {
 });
 title.addEventListener("blur", function () {
   title.classList.remove("focused");
+  if (title.value === "") {
+    title.classList.add("rq");
+    errorTitle.textContent = "Title is required";
+  }
 });
-
 category.addEventListener("focus", function () {
   category.classList.add("focused");
 });
 category.addEventListener("blur", function () {
-  category.classList.remove("focused");
+  if (category.value === "") {
+    category.classList.add("rq");
+    errorCategory.textContent = "Category is required";
+  } else {
+    category.classList.remove("focused");
+  }
 });
 
 thumbnail.addEventListener("focus", function () {
   thumbnail.classList.add("focused");
 });
 thumbnail.addEventListener("blur", function () {
-  thumbnail.classList.remove("focused");
-});
-Description.addEventListener("focus", () => {
-  Description.classList.add("focused");
-});
-Description.addEventListener("blur", () => {
-  Description.classList.remove("focused");
-});
-
-/* ================= FORM VALIDATION ================= */
-function validateForm() {
-  errorTitle.textContent = title.value === "" ? "Title is required" : "";
-  errorCategory.textContent =
-    category.value === "" ? "Category is required" : "";
-  errorThumbnail.textContent =
-    thumbnail.value === "" ? "Thumbnail is required" : "";
-  errorDescription.textContent =
-    quill.getText().trim() === "" ? "Description is required" : "";
-
-  if (title.value === "") {
-    title.classList.add("rq");
-  }
-  if (category.value === "") {
-    category.classList.add("rq");
-  }
   if (thumbnail.value === "") {
+    thumbnail.classList.remove("focused");
     thumbnail.classList.add("rq");
+    errorThumbnail.textContent = "Thumbnail is required";
+  } else {
+    thumbnail.classList.remove("focused");
   }
-  if (quill.getText().trim() === "") {
-    Description.classList.add("rq");
-  }
-  if (
-    title.value === "" ||
-    category.value === "" ||
-    quill.getText().trim() === ""
-  ) {
-    return false;
-  }
-  return true;
-}
+});
 
-// Remove error messages 
-title.addEventListener("keyup", () => {
-  if (title.value.trim() !== "") {
-    title.classList.remove("rq");
-    errorTitle.textContent = "";
-  }
+quillWrapper.addEventListener("focus-within", () => {
+  quillWrapper.classList.add("focused");
 });
-category.addEventListener("change", () => {
-  if (category.value !== "") {
-    category.classList.remove("rq");
-    errorCategory.textContent = "";
-  }
-});
-thumbnail.addEventListener("change", () => {
-  if (thumbnail.value !== "") {
-    thumbnail.classList.remove("rq");
-    errorThumbnail.textContent = "";
-  }
-});
-Description.addEventListener("keyup", () => {
-  if (quill.getText().trim() !== "") {
-    Description.classList.remove("rq");
-    errorDescription.textContent = "";
+quillWrapper.addEventListener("blur", () => {
+  if (quill.getText().trim() === "") {
+    quillWrapper.classList.remove("focused");
+    quillWrapper.classList.add("rq");
+    errorDescription.textContent = "Description is required";
+  } else {
+    quillWrapper.classList.remove("focused");
   }
 });
 /* ================= SUBMIT FORM ================= */
 inputForm.addEventListener("submit", (e) => {
   e.preventDefault();
-
+  if (isSubmitting) return;
+  isSubmitting = true;
   if (!validateForm()) {
+    isSubmitting = false; 
     return;
   }
   fetch(`${baseUrl}/articles`, {
@@ -209,15 +262,11 @@ inputForm.addEventListener("submit", (e) => {
     })
     .then((res) => res.json())
     .then((res) => {
-      if(res.result === true){
+      if (res.result === true) {
         location.href = "../Article/allArticle.html";
-        sessionStorage.setItem("isCreated","true");
+        sessionStorage.setItem("isCreated", "true");
       }
     });
-  // .catch((err) => {
-  //   console.error(err);
-  //   showToast("Error creating article. Please try again.");
-  // });
 });
 
 /* ================= TOAST NOTIFICATION ================= */
