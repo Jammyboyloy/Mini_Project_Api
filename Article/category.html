@@ -192,23 +192,24 @@
   </aside>
 
   <main class="content p-5 bg-secondary">
-    <div class="container-fluid">
+    <div class="container-fluid mt-4">
       <h2 class="text-main">All Categories</h2>
       <p class="text-secondary">Browse all published articles</p>
 
       <section>
-        <div class="row gy-4">
+        <div class="row gy-4 d-flex align-items-center">
           <div class="col-12 col-md-5">
             <div class="position-relative text-secondary mb-2 fw">
-              <input type="search" class="form-control bg-prime fs-text ps-7 bg-main border searchCategory text-main"
+              <input type="search" class="form-control bg-prime fs-text ps-7 bg-main border searchCategory text-main rounded-3"
+                style="padding-top: 13px; padding-bottom: 13px;"
                 placeholder="Search category..." id="searchCategory">
               <i class="bi bi-search position-absolute icon-input tran-y"></i>
             </div>
           </div>
           <div class="col-12 col-md-7">
             <div class="text-sm-start text-md-end">
-              <button class="btn bg-btn text-white" data-bs-toggle="modal" data-bs-target="#createCategory">Create
-                Category
+              <button class="btn bg-btn text-white px-4 py-2" data-bs-toggle="modal" data-bs-target="#createCategory">
+                <i class="bi bi-plus-circle me-1"></i> Create Category
               </button>
             </div>
           </div>
@@ -240,6 +241,8 @@
         </div>
       </section>
     </div>
+
+    <div class="py-3"></div>
 
   </main>
 
