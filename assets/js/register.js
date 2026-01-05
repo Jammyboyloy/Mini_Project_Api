@@ -133,6 +133,7 @@ email.addEventListener("blur", () => {
     p[2].innerHTML = "Please enter a valid email address";
     email.classList.add("rq");
   }
+  email.classList.remove("focused");
 });
 
 let prevPassword = password.value;

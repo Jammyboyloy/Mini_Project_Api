@@ -1,3 +1,4 @@
+if (!token) location.href = "../index.html";
 /* ================= ELEMENTS ================= */
 let inputForm = document.getElementById("inputForm");
 let title = document.getElementById("Title");
