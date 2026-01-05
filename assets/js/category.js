@@ -1,3 +1,4 @@
+if (!token) location.href = "../index.html";
 const perPage = 10;
 let currentPage = 1;
 let tbody = document.querySelector("#tbody");

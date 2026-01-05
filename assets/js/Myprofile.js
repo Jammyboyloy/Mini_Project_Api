@@ -1,3 +1,4 @@
+if (!token) location.href = "../index.html";
 const profileID = document.querySelector("#profile-id");
 const email = document.querySelector("#email");
 const firstname = document.querySelector("#firstname");

@@ -1,3 +1,4 @@
+if (!token) location.href = "../index.html";
 let id = sessionStorage.getItem("idArticle");
 
 fetch(baseUrl + `/articles/${id}`, {
