@@ -200,13 +200,7 @@ thumbnail.addEventListener("focus", function () {
   thumbnail.classList.add("focused");
 });
 thumbnail.addEventListener("blur", function () {
-  if (thumbnail.value === "") {
     thumbnail.classList.remove("focused");
-    thumbnail.classList.add("rq");
-    errorThumbnail.textContent = "Thumbnail is required";
-  } else {
-    thumbnail.classList.remove("focused");
-  }
 });
 
 quillWrapper.addEventListener("focus-within", () => {
@@ -227,7 +221,7 @@ inputForm.addEventListener("submit", (e) => {
   if (isSubmitting) return;
   isSubmitting = true;
   if (!validateForm()) {
-    isSubmitting = false; 
+    isSubmitting = false;
     return;
   }
   fetch(`${baseUrl}/articles`, {
