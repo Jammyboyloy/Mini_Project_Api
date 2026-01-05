@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Profile</title>
+  <link rel="icon" href="../assets/image/logo.png" type="image/png">
   <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/bootstrap.css">
   <link rel="stylesheet" href="../assets/bootstrap-icons/bootstrap-icons.css">
   <link rel="stylesheet" href="../assets/bootstrap-5.3.7/css/theme.css">
@@ -13,7 +14,6 @@
     input:disabled {
       background-color: var(--bg-main) !important;
     }
-    
   </style>
 </head>
 
@@ -23,11 +23,16 @@
     <nav class="navbar fixed-top border-bottom bg-main" style="height: 75px;">
       <div class="container-fluid px-3 d-flex align-items-center gap-3">
         <div class="d-flex gap-3">
-          <button class="btn fs-4 p-0 m-0 btnCanvas d-block d-lg-none" type="button" data-bs-toggle="offcanvas"
+          <button class="btn fs-4 p-0 m-0 btnCanvas d-block d-lg-none border-0" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
             <i class="bi bi-list"></i>
           </button>
-          <a href="../Article/dashboard.html" class="navbar-brand text-primary fs-4 p-0 m-0">Post</a>
+          <a href="../Article/dashboard.html" class="navbar-brand text-primary">
+            <div class="d-flex align-items-end gap-2">
+              <img src="../assets/image/logo.png" alt="" style="width: 40px;">
+              <p class="p-0 m-0 fs-4 fw-medium">ArticleHub</p>
+            </div>
+          </a>
         </div>
 
         <div class="d-flex gap-3 ms-auto">
@@ -55,13 +60,20 @@
         </button>
 
 
-        <div class="offcanvas offcanvas-start border-end bg-main" style="width: 250px;" data-bs-scroll="true" tabindex="-1"
-          id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+        <div class="offcanvas offcanvas-start border-end bg-main" style="width: 250px;" data-bs-scroll="true"
+          tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
           <h5 class="offcanvas-title border-bottom py-2 mb-3 px-3 text-primary" id="offcanvasWithBothOptionsLabel">
-            Post</h5>
+            <a href="../Article/dashboard.html" class="navbar-brand text-primary d-block">
+              <div class="d-flex gap-2">
+                <img src="../assets/image/logo.png" alt="" style="width: 30px;">
+                <p class="p-0 m-0 fs-5 fw-medium">ArticleHub</p>
+              </div>
+            </a>
+          </h5>
           <ul class="nav flex-column gap-2 px-3">
             <li class="nav-item">
-              <a class="nav-link text-main" href="../Article/dashboard.html"><i class="bi bi-speedometer2 me-3 icon"></i>
+              <a class="nav-link text-main" href="../Article/dashboard.html"><i
+                  class="bi bi-speedometer2 me-3 icon"></i>
                 Dashboard</a>
             </li>
             <li class="nav-item">
@@ -168,7 +180,8 @@
                         <h5 class="text-danger fw-medium mb-3">Remove Profile</h5>
                         <p class="text-secondary">Are you sure you want to remove profile?</p>
                         <button class="btn btn-outline-secondary px-5 py-2" data-bs-dismiss="modal">Cancel</button>
-                        <button class="btn btn-danger ms-2 px-5 py-2" id="removeProfile" data-bs-dismiss="modal">Remove</button>
+                        <button class="btn btn-danger ms-2 px-5 py-2" id="removeProfile"
+                          data-bs-dismiss="modal">Remove</button>
                       </div>
                     </div>
                   </div>
@@ -182,7 +195,8 @@
                   data-bs-target="#exampleModal2">Log out</button>
                 <button class="btn bg-btn text-white px-4 getInfoBack" type="button" data-bs-toggle="modal"
                   data-bs-target="#editInfo">Edit Info</button>
-                <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2"
+                  aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content rounded-3 bg-main">
                       <div class="modal-body text-center">
@@ -194,7 +208,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="modal fade" id="editInfo" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal fade" id="editInfo" tabindex="-1" aria-labelledby="exampleModalLabel2"
+                  aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content rounded-3 bg-main">
                       <div class="modal-body">
@@ -204,7 +219,8 @@
                             <div class="col-12">
                               <label class="form-label my-2 text-main">First Name : </label>
                               <div class="position-relative text-main mb-2">
-                                <input type="text" id="fname" class="form-control bg-main fs-text ps-7 border text-main" placeholder="Enter your first name">
+                                <input type="text" id="fname" class="form-control bg-main fs-text ps-7 border text-main"
+                                  placeholder="Enter your first name">
                                 <i class="bi bi-person position-absolute icon-input tran-y"></i>
                               </div>
                               <p class="mes text-danger"></p>
@@ -212,7 +228,8 @@
                             <div class="col-12">
                               <label class="form-label my-2 text-main">Last Name : </label>
                               <div class="position-relative text-main mb-2">
-                                <input type="text" id="lname" class="form-control bg-main fs-text ps-7 border text-main" placeholder="Enter your last name">
+                                <input type="text" id="lname" class="form-control bg-main fs-text ps-7 border text-main"
+                                  placeholder="Enter your last name">
                                 <i class="bi bi-person position-absolute icon-input tran-y"></i>
                               </div>
                               <p class="mes text-danger"></p>
@@ -220,7 +237,9 @@
                             <div class="col-12">
                               <label class="form-label my-2 text-main">Email : </label>
                               <div class="position-relative text-main mb-2">
-                                <input type="email" id="emailEdit" class="form-control bg-main fs-text ps-7 border text-main" placeholder="Enter your email">
+                                <input type="email" id="emailEdit"
+                                  class="form-control bg-main fs-text ps-7 border text-main"
+                                  placeholder="Enter your email">
                                 <i class="bi bi-envelope position-absolute icon-input tran-y"></i>
                               </div>
                               <p class="mes text-danger"></p>
@@ -274,7 +293,8 @@
             <div class="col-lg-6">
               <label class="form-label my-2 text-main">Register at : </label>
               <div class="position-relative text-secondary mb-2 text-main">
-                <input type="text" id="registered-at" class="form-control bg-main fs-text ps-7 border text-main" disabled>
+                <input type="text" id="registered-at" class="form-control bg-main fs-text ps-7 border text-main"
+                  disabled>
                 <i class="bi bi-calendar3 position-absolute icon-input tran-y"></i>
               </div>
             </div>

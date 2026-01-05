@@ -103,6 +103,7 @@ check.forEach((input, index) => {
       p[index].innerHTML = "Cannot start with a number";
       input.classList.add("rq");
     }
+    input.classList.remove("focused");
   });
 
   input.addEventListener("input", () => {

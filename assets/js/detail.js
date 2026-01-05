@@ -13,7 +13,7 @@ fetch(baseUrl + `/articles/${id}`, {
           <img src="${
             item.data.thumbnail
           }" alt="" class="img-fluid object-fit-cover"
-            style="height: 300px; width: 100%; border-radius: 8px 8px 0 0;">
+            style="height: 400px; width: 100%; border-radius: 8px 8px 0 0;">
           <div class="card-body text-start">
             <div class="d-flex justify-content-center align-items-center gap-2 mb-4">
               <img src="${
