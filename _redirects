@@ -1,2 +1,0 @@
-/api/* http://blogs.csm.linkpc.net/api/v1/:splat  200!
-/images/* http://blogs.csm.linkpc.net/:splat         200!
